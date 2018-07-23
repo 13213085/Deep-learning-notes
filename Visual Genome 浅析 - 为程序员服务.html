@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://ju.outofmemory.cn/entry/343958 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="description" content="最近准备研究VQA方向，于是对相关的数据和工作做了一些survey。 对于任何一个AI相关的任务，最重要的一点就是数据。由斯坦福Li Fei-
+Fei(Paper中就是这么写的，而不是Fei-Fei Li)提出的Visual Genome就是一个非常重要而且非常好用的数据集。
+这篇博客将会整理总结Visual Genome这份数据集的官方Paper。其中融入了我的一些理解，如
+
+">
+    <meta name="keywords" content="{Paper},{Reading} Visual Genome 浅析">
+    <title>Visual Genome 浅析 - 为程序员服务</title>
+    <link href="./Visual Genome 浅析 - 为程序员服务_files/17.1.css" type="text/css" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="http://outofmemory.cn/favicon.ico" type="image/x-icon">
+    
+</head>
+<body>
+
+<header class="head">
+<div class="head-left">
+    <div class="logo"><a href="http://outofmemory.cn/">OutOfMemory.CN</a></div>
+    <div class="beta"><sup>β</sup></div>
+    <div class="nav">
+        <ul id="headNav">
+            <li class="current"><a href="http://ju.outofmemory.cn/" title="聚客：编程技术网站牛人牛博聚集地">聚客</a></li>
+            <li><a href="http://outofmemory.cn/code-snippet/" title="代码：分享代码 分享经验">代码</a></li>
+            <li><a href="http://j.outofmemory.cn/" title="技术专栏，精华">专栏</a></li>
+            <li><a href="http://outofmemory.cn/tutorial/" title="简单易学的技术教程">教程</a></li>
+            <li style="width:65px"><a href="http://maven.outofmemory.cn/" title="Maven信息库速查">Maven</a></li>
+            <li><a href="http://outofmemory.cn/github/" title="Github上的中国开源人">Gitter</a></li>
+            <li><a href="http://outofmemory.cn/tag/" title="标签">标签</a></li>
+        </ul>
+    </div>
+</div>
+<div class="head-right">
+<div class="userStatus"><a class="signin" target="_self" href="http://outofmemory.cn/user/login"><i></i><b>登录</b></a><a class="signup" target="_self" href="http://outofmemory.cn/user/register"><i></i><b>注册</b></a></div>
+</div>
+</header>
+
+
+<div class="tgL books"><span>&nbsp;</span>好书：<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEgFWEl0QAyJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQIUBFwdXhQdS0IJRmtFYWBOE0MBQWFyVy4fCHNDaXgoTCllDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVsWBRoEXStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsVBBEOUx5aCltXWwg%3D" target="_blank">重构 改善既有代码的设计</a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEgFWEl0QAyJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQIUBFwdXhQdS0IJRmtFYWBOE0MBQWFyVy4fCHNDaXgoTCllDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVsWBRoEXStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsVBBEOUx5aCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B011LPUB42/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B011LPUB42&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]<span class="sep"> | </span><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZTEl4cACJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAVweUhcdS0IJRmtvQGoGIFhYfGdieREeXFR5FnhXWClTDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgcCxsAVStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxQOUBJZCltXWwg%3D" target="_blank">敏捷软件开发原则、模式与实践</a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZTEl4cACJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAVweUhcdS0IJRmtvQGoGIFhYfGdieREeXFR5FnhXWClTDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgcCxsAVStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxQOUBJZCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B00116MMA8/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B00116MMA8&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]<span class="sep"> | </span><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEw5TH1gcBiJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMbAVEYUhEdS0IJRmtKWhZRLn5bcmd3UwgbMG97VWw2Ujl1Dh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBQGFMXChEDVCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUCxQDVhJfCltXWwg%3D" target="_blank">代码大全（第二版）</a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEw5TH1gcBiJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMbAVEYUhEdS0IJRmtKWhZRLn5bcmd3UwgbMG97VWw2Ujl1Dh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBQGFMXChEDVCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUCxQDVhJfCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B0061XKRXA/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B0061XKRXA&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]<span class="sep"> | </span><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSHloUBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFAaWhIdS0IJRmtuV1NCDW5FZ2dpHT1jOxR0W09ScgR1Dh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBQGVsUCxEGXCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUCVBpcCltXWwg%3D" target="_blank">代码整洁之道</a>[<a href="https://www.amazon.cn/gp/product/B0031M9GHC/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B0031M9GHC&amp;linkCode=as2&amp;tag=outofmemorycn-23" target="_blank">亚马逊</a>]<span class="sep"> | </span><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSGlgXASJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFQYWRYdS0IJRmtcZW5nT0IYUWBOYUt%2FK05jRgRTUwhlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgXCxQDUCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUGVhlYCltXWwg%3D" target="_blank">企业应用架构模式</a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSGlgXASJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFQYWRYdS0IJRmtcZW5nT0IYUWBOYUt%2FK05jRgRTUwhlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgXCxQDUCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUGVhlYCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B003LBSRDM/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B003LBSRDM&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]</div><div class="wrap">
+<div class="content"><h1>Visual Genome 浅析</h1>
+<div class="meta">
+    <a href="http://ju.outofmemory.cn/feed/1926/" title="Friskit的粉碎机"><i class="ico man"></i>Friskit的粉碎机</a>
+    <time><i class="ico date"></i>2018-02-09</time>
+    <span class="pv"><b>194</b> 阅读</span>
+</div>
+<div class="tags">
+</div>
+
+<script src="./Visual Genome 浅析 - 为程序员服务_files/hm.js.下载"></script><script async="" src="./Visual Genome 浅析 - 为程序员服务_files/analytics.js.下载"></script><script>
+    function imgError(img){
+        if (typeof img.hasReplaceSrc != 'undefined'){
+            var refer = $('div.author a:last').attr('href');
+            img.src = '/imgr?src=' + encodeURIComponent(img.src) + '&r=' + encodeURIComponent(refer);
+        } else {
+            var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+            for (var i=0;i<img.attributes.length;i++){
+                var attrName = img.attributes[i].nodeName;
+                var attrVal = img.attributes[i].nodeValue;
+                if(attrName.toLowerCase() != 'src' && urlPattern.test(attrVal)){
+                    img.src = attrVal;
+                    img.hasReplaceSrc=true;
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+</script>
+<div>
+ <p>
+  最近准备研究VQA方向，于是对相关的数据和工作做了一些survey。
+ </p>
+ <p>
+  对于任何一个AI相关的任务，最重要的一点就是数据。由斯坦福Li Fei-Fei(Paper中就是这么写的，而不是Fei-Fei Li)提出的Visual Genome就是一个非常重要而且非常好用的数据集。
+ </p>
+ <p>
+  这篇博客将会整理总结Visual Genome这份数据集的官方Paper。其中融入了我的一些理解，如果有错请帮忙勘误，并多多包涵。谢谢
+ </p>
+ <hr>
+ <p>
+  论文名称：
+  <strong>
+   Visual Genome
+  </strong>
+ </p>
+ <p>
+  副标题:
+  <strong>
+   Connecting Language and Vision Using Crowdsourced Dense Image Annotations.
+  </strong>
+ </p>
+ <p>
+  作者:
+  <strong>
+   Ranjay Krishna · Yuke Zhu · Oliver Groth · Justin Johnson · Kenji Hata · Joshua Kravitz · Stephanie Chen · Yannis Kalantidis · Li-Jia Li · David A. Shamma · Michael S. Bernstein · Li Fei-Fei
+  </strong>
+ </p>
+ <p>
+  地址:
+  <a href="https://arxiv.org/abs/1602.07332">
+   https://arxiv.org/abs/1602.07332
+  </a>
+ </p>
+ <p>
+  （其实下面细节非常多，不想了解那么多，可以直接跳到
+  <a rel="nofollow external" href="http://blog.friskit.me/rss/#jump">
+   整理
+  </a>
+  部分）
+ </p>
+ <h5 id="">
+  摘要
+ </h5>
+ <p>
+  近年来，在深度学习的推动下，人工智能的三大方向（CV、Speech、NLP）取得了很多进展。在很多task上，AI的水平都达到甚至超越了人类baseline。
+ </p>
+ <p>
+  然而，在AI学术界存在的很多争论。其中有一个声音认为：现行的很多benchmark、challenge等竞赛的项目，都只是在一个特定数据集上进行着尽可能全面的“模式识别”，而不是在真正实现一个“强人工智能”。
+ </p>
+ <p>
+  现今很多Deep Learning模型也确实都是在把自己打造成一个“特征机器”，用各种难以解释的统计模型，将人工智能问题以拟合函数的角度来进行。
+ </p>
+ <p>
+  造成这个问题的很大一部分原因，就是因为现今数据集的目标大多是让AI学会“认识(Recognition)”，而非教会AI如何“认知(Cognition)”。
+ </p>
+ <p>
+  Li Fei-Fei团队认为：认知的核心任务不仅仅是进行识别，更重要的是要在一个视觉世界中进行推理：
+ </p>
+ <blockquote>
+  <p>
+   Cognition is core to tasks that involve not just recognizing, but reasoning about our visual world.
+  </p>
+ </blockquote>
+ <p>
+  当然，Li Fei-Fei团队主要的领域是Computer Vision，所以这里提到的是visual world。但是这个论点在其他领域中也是成立的。
+ </p>
+ <p>
+  例如在自动问答（Question Answering）领域，很多人将这个任务拆解成为通过ranking算法对经过retrieve得到的candidate answer进行排序的任务。或者直接利用大量经过低维度特征抽取（Word Embedding等）后的数据训练的生成模型来逼近答案数据的真实分布，从而以生成的方式教会AI如何直接“说出”答案。
+ </p>
+ <p>
+  但事实上，这些算法的核心思想仍然是对模型的拟合和对损失函数的优化。距离“强”智能、和“机器认知”还有一定的距离。
+ </p>
+ <p>
+  想要在认知任务上取的成功，则势必要对数据进行细粒度、广范围的标注。这样模型才能利用这些数据去理解对象之间的关系(relationships)、交互(interactions)，甚至是理解整个世界：
+ </p>
+ <blockquote>
+  <p>
+   To achieve success at cognitive tasks, models need to understand the interactions and relationships between objects in an image.
+  </p>
+ </blockquote>
+ <p>
+  这种对认知能力的处理，能让复杂问题的解答成为可能。
+ </p>
+ <p>
+  例如当输入一张图片和一个问题“What vehicle is the person riding?”，机器不但需要识别图片中的对象，更要能识别出对象之间的关系：riding(man, carriage)、pulling(horse, carriage)，最终才能产生正确的答案：“The person is riding a horse-drawn carriage.”
+ </p>
+ <p>
+  于是，Li Fei-Fei团队设计了这样一个数据集：它不但包括了图像本身，更包括了图像内对象之间的关系等众多数据（包括objects、attributes、relationship等）。并希望通过这些数据能够推动“认知”这一问题在CV领域的发展。
+ </p>
+ <p>
+  Visual Genome一共包括了
+  <strong>
+   108K张图片
+  </strong>
+  ，平均每张图片内包含了
+  <strong>
+   35个object
+  </strong>
+  ，和
+  <strong>
+   26个attributes
+  </strong>
+  ，以及
+  <strong>
+   21对object之间的relationship pair
+  </strong>
+  。
+ </p>
+ <p>
+  除此之外，作者们还将其中所有的object、attributes、relationships和在region descriptions与question answer pairs中的名词短语都映射到了WordNet synset上。从而让打通了从CV到Knowledge乃至NLP之间的连接通道。
+ </p>
+ <h5 id="1">
+  1. 介绍
+ </h5>
+ <p>
+  CV的最终目标是构造一台机器能够完全理解一个视觉场景：它应该能够识别物体(object detection)、描述他们的属性(describe their attributes)，并且能够识别object之间的relationships。
+ </p>
+ <p>
+  对场景的理解将会帮助例如图像搜索、VQA、机器人的交互系统等。而想要达成这些成就，海量数据是必不可少的。
+ </p>
+ <p>
+  下图显示了现今的model能够识别出场景中的物体，但是还不能解释物体之间的交互和关系：
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/2e7959236ebd2eb1127abe87188f6.PNG" onerror="return imgError(this)" style="width: 1061px; height: 867px;">
+ </p>
+ <p>
+  近年来，有很多利用“下一代数据集”来进行训练和测试机器进行认知场景理解(cognitive scene understanding)和推理任务(reasoning tasks)的工作。其中最著名的莫过于MS-COCO和VQA。
+ </p>
+ <p>
+  MS-COCO包括了
+  <strong>
+   300K张从Filckr上收集的真实图片
+  </strong>
+  。每张图片都对
+  <strong>
+   80个物体classes
+  </strong>
+  (仅当图中出现)进行了像素的segmentation。并且每张图片还包含了
+  <strong>
+   5个相互独立的、由用户产生的描述场景的句子
+  </strong>
+ </p>
+ <p>
+  VQA则对MS-COCO数据标注了共计
+  <strong>
+   614K
+  </strong>
+  个与每张图像相关的question answer pairs。
+ </p>
+ <p>
+  这两个数据集对object detection、segmentation和summary-level image captioning和简单的VQA都很大的帮助。但用这些数据集训练的模型缺乏对场景内物体的更深层次的理解。
+ </p>
+ <p>
+  例如对上面那张图片，MS-COCO上的state-of-the-art的结果只能产生这种level的描述文本：“two men are standing next to an elephant.”
+ </p>
+ <p>
+  但如果模型能够由更深层次的理解，显然能够根据图片中物体之间的关系，产生出更丰富的描述语句。
+ </p>
+ <p>
+  作者认为，想要让图片理解的更透彻，必须要在现有的数据集中添加三个要素：
+ </p>
+ <ul>
+  <li>
+   一个
+   <strong>
+    从视觉概念到文本的基本信息
+   </strong>
+  </li>
+  <li>
+   对每张图片都包括对图片内多个区域的
+   <strong>
+    完整的descriptions和QAs的数据集
+   </strong>
+  </li>
+  <li>
+   对图片中的每一个元素都有的一个
+   <strong>
+    形式化的表述方式
+   </strong>
+  </li>
+ </ul>
+ <p>
+  正是出于这个意图，Li Fei-Fei团队构建了Visual Genome数据集。
+ </p>
+ <p>
+  Visual Genome数据集发布的第一个版本包括了
+  <strong>
+   108,077
+  </strong>
+  张图片。这些图片是YFCC100M和MS-COCO的交集。
+ </p>
+ <p>
+  而Visual Genome与其他传统数据集的主要区别，就是它将图片内对关系(relations)和属性(attributes)的标注看作是重中之重。
+ </p>
+ <p>
+  因为在图片场景的高层次理解问题中，识别物体和他们之间的关系尤为重要，甚至会影响对图像解读的正确性。例如“a dog chasing a man” v.s. “a man chasing a dog”。
+ </p>
+ <p>
+  所以，为了完成“
+  <strong>
+   从视觉概念到文本的基本信息
+  </strong>
+  ”这个任务，Visual Genome数据集首先对图像内对象的关系和属性有着详尽的标注。
+ </p>
+ <p>
+  除此之外，一个图像场景内应该包含了非常丰富的信息，显然不能只用一句话概括。而现存的诸如Flicker 30K和MS-COCO等数据集只关注在high-level description（尽管MS-COCO为每张图片提供多个description，但这些description是由多个不同用户提出的high-level description）。
+ </p>
+ <p>
+  所以，Visual Genome提供了
+  <strong>
+   对每场图片中场景的完整的description set
+  </strong>
+  。同时，受到VQA数据集的启发，基于图片的descriptions，对每张图片平均标注了17个question answer pairs。这使得同时利用NLP领域的description和CV领域的图像进行联合训练，来解决region-based question answers问题成为可能。
+ </p>
+ <p>
+  由于标注数据跨越了NLP(descriptions)和CV(images)两大领域，所以Visual Genome成为第一个对图像和文本提供了
+  <strong>
+   形式化表述
+  </strong>
+  的数据集。
+ </p>
+ <p>
+  例如对于上面的图片，可以将“holding”关系与“woman”和"food"对象形式化地表述为
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> holding</span><span class="pun">(</span><span class="pln">woman</span><span class="pun">,</span><span class="pln">food</span><span class="pun">)</span><span class="pln"> </span></code>
+  。
+ </p>
+ <p>
+  在这个框架下，可以将所有的object和他们之间的关系组成一个"Scene Graph"。
+ </p>
+ <p>
+  除此之外，所有的图像中的objects、attributes和relationships都被映射到了一个WordNet ID(即synset ID)中。这个映射将Visual Genome中的一切内容关联到了一起，甚至可以用来在多张具有共性的图片之间训练与上下文有关的模型。
+ </p>
+ <p>
+  下图是一个Visual Genome的典型例子。
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/3eb67ca9f2310ae497f906800f51d.PNG" onerror="return imgError(this)" style="width: 1061px; height: 897px;">
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/30b0e9aeee104d9c731bd0fa64d29.PNG" onerror="return imgError(this)" style="width: 1061px; height: 663px;">
+ </p>
+ <p>
+  在这个例子中展示了三个区域的文本描述（A man and a woman sit on a park bench along a river; Park bench is made of gray weathered wood; The man is almost bald）和他们对应的区域图(region graphs，即每句话上面的那个小graph)。
+ </p>
+ <p>
+  如果将图中所有的概念用关系连接起来，会得到一个描述整张图片的graph。例如对区域描述“a man and a woman sit on a park bench along a river”莱索，这些连接对象的关系例如sits_on(man, bench), in_front_of(man, river)和sites_on(woman, bench)等。
+ </p>
+ <p>
+  下图是另一个例子
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/a23a9342faf78fefe1fe85d6e35a8.PNG" onerror="return imgError(this)" style="width: 1061px; height: 1349px;">
+ </p>
+ <p>
+  下面的graph是这张图片的scene graph。其中包含了很多objects (child, instructor, helmet, etc)，这些object都被用bounding boxes标记出来（图片中没显示而已）。这些objects拥有它们自己的attributes: large, green, behind, etc. 最后，这些objects通过他们之间的关系被连接在一起：wears(child, helmet), wears(instructor, jacket), etc.
+ </p>
+ <h5 id="2visualgenomedatarepresentation">
+  2. Visual Genome Data Representation
+ </h5>
+ <p>
+  Visual Genome数据集中包括了七个主要的组成部分(components): region descriptions, objects, attributes, relationships, region graphs, scene graphs,和question answer pairs.
+ </p>
+ <p>
+  作者首先收集了大量的描述文本和QA pairs，而且这些原始文本数据没有长度和词表限制。然后从description文本中抽取objects, attributes和relationships。然后将这些objects, attributes和relationships组成scene graphs, 以此来作为整张图片的形式化表示(formal representation)
+ </p>
+ <p>
+  下图是一个例子
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/b619366c03f3e8a4b0b94829ce31e.PNG" onerror="return imgError(this)" style="width: 1061px; height: 1362px;">
+ </p>
+ <p>
+  Visual Genome数据集中的每一张图片都包括一些区域描述(region descriptions)，这些description用来描述图片的局部。同时作者还收集了两类question answer pairs (QAs): freeform QAs和region-based QAs.
+ </p>
+ <p>
+  其中freeform QAs就是指针对整张图片，询问多个区域或者全局的信息。而region-based QAs就是指，问题的答案往往只隐藏在特定一个区域中。
+ </p>
+ <h6 id="21multipleregionsandtheirdescriptions">
+  2.1. Multiple regions and their descriptions
+ </h6>
+ <p>
+  对现实世界中的图片来说，一个简单的总结句并不能完整的描述图片和其中各个对象之间的交互关系。为了弥补这个问题，最自然的方法就是为图片中的每个区域都写一些描述信息。
+ </p>
+ <p>
+  在Visual Genome中，作者收集了不同的人工编写的图片区域描述(image region descriptions)，并且将每个区域都用包围盒(bounding box)定位。例如下图：
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/07c4a86a48ae33441daa31a301a27.PNG" onerror="return imgError(this)" style="width: 1061px; height: 1393px;">
+ </p>
+ <p>
+  这张图显示了图片中被包围盒定位的三个区域和对应的人工编写的descriptions。
+ </p>
+ <p>
+  注意：这些描述有的只包含对特定对象的attribute，例如
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yellow fire hydrant </span></code>
+  。而有些则包含了对象之间的交互信息，例如
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man jumping over fire hydrant </span></code>
+  则包含了两个对象：
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man </span></code>
+  和
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> fire hydrant </span></code>
+  。
+ </p>
+ <p>
+  这种“冗余”标注的特性，使得将整个图像的各种信息连接成一个scene graph成为可能。
+ </p>
+ <h6 id="22multipleobjectsandtheirboundingboxes">
+  2.2. Multiple objects and their bounding boxes
+ </h6>
+ <p>
+  数据集中的每张图片平均包括了35个objects，并且都用一个紧密的包围盒指出其位置（对图片的bounding box标注如下图）。除此之外，每一个object都被映射到了WordNet中的synset ID。
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/9de3674b006f885d2d8d876d3c950.PNG" onerror="return imgError(this)">
+ </p>
+ <p>
+  比如说，
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man </span></code>
+  被映射到了
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man</span><span class="pun">.</span><span class="pln">n</span><span class="pun">.</span><span class="lit">03</span><span class="pln"> </span><span class="pun">(</span><span class="pln">the </span><span class="kwd">generic</span><span class="pln"> </span><span class="kwd">use</span><span class="pln"> of the word to refer to any human being</span><span class="pun">)</span><span class="pln"> </span></code>
+  。 而
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> person </span></code>
+  被映射到了
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> person</span><span class="pun">.</span><span class="pln">n</span><span class="pun">.</span><span class="lit">01</span><span class="pln"> </span><span class="pun">(</span><span class="pln">a human being</span><span class="pun">)</span><span class="pln"> </span></code>
+  。而这两个概念虽然都可以映射到
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> person</span><span class="pun">.</span><span class="pln">n</span><span class="pun">.</span><span class="lit">01</span><span class="pln"> </span></code>
+  上（因为它是
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man</span><span class="pun">.</span><span class="pln">n</span><span class="pun">.</span><span class="lit">03</span><span class="pln"> </span></code>
+  的上位词），但作者并没有将这些synsets做standardize的操作。因为作者认为可以通过WordNet Ontology很容易地完成这项任务。
+ </p>
+ <p>
+  也就是说，图片中对object的标注可能出现“一物多名”的情况。（例如 man, person, human等），但这个问题可以用WordNet Ongology解决。
+ </p>
+ <h6 id="23asetofattributes">
+  2.3. A set of attributes
+ </h6>
+ <p>
+  Visual Genome中的每幅图像平均包括了26个attributes。每一个对象都有0到多个attributes与它们相连。
+ </p>
+ <p>
+  这些attributes包括了color (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yellow </span></code>
+  ), states (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> standing </span></code>
+  ), etc. 对属性的标注如下图:
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/40219a380f6e4e43262c116c5b532.PNG" onerror="return imgError(this)">
+ </p>
+ <p>
+  就像从region description中抽取object的方法一样，作者也从描述中抽取了这些objects的attributes。
+ </p>
+ <p>
+  例如在上图中，从"yellow fire hydrant"抽取出attribute
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yellow </span></code>
+  for the
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> fire hydrant </span></code>
+  。并且与object一起，映射到了WordNet上。例如
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yello </span></code>
+  被映射到了
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yellow</span><span class="pun">.</span><span class="pln">s</span><span class="pun">.</span><span class="lit">01</span><span class="pln"> </span><span class="pun">(</span><span class="pln">of the color intermediate between green </span><span class="kwd">and</span><span class="pln"> orange </span><span class="kwd">in</span><span class="pln"> the color spectrum</span><span class="pun">;</span><span class="pln"> of something resembling the color of an egg yolk</span><span class="pun">)</span><span class="pln"> </span></code>
+  .
+ </p>
+ <h6 id="24asetofrelationships">
+  2.4. A set of relationships
+ </h6>
+ <p>
+  Relationships将两个object连接在一起。这些relationship可以是actions (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> jumping over </span></code>
+  ), 相对空间位置(e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> </span><span class="kwd">is</span><span class="pln"> behind </span></code>
+  ), 描述性的动词 (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> wear </span></code>
+  ), 介词 (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> </span><span class="kwd">with</span><span class="pln"> </span></code>
+  ), 比较级 (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> taller than </span></code>
+  ), 或者介词短语 (e.g.
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> drive on </span></code>
+  ). 例如，从region description "man jumping over fire hydrant"中，可以抽取两个objects
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man </span></code>
+  和
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> fire hydrant </span></code>
+  之间的relationship
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> jumping over </span></code>
+  (如下图)
+ </p>
+ <p>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/169fe1916c20ea3e28cf745da33be.PNG" onerror="return imgError(this)">
+ </p>
+ <p>
+  这些关系连接着“主语(subject)”和“宾语(object)”。在这个case中，主语是
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> man </span></code>
+  ，他在执行relationship
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> jumping over </span></code>
+  ，而宾语则是
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> fire hydrant </span></code>
+  。每一个relationship也都映射到了一个WordNet的synset ID上。例如
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> jumping </span></code>
+  对应到了
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> jump</span><span class="pun">.</span><span class="pln">a</span><span class="pun">.</span><span class="lit">1</span><span class="pln"> </span><span class="pun">(</span><span class="pln">moving forward </span><span class="kwd">by</span><span class="pln"> leaps </span><span class="kwd">and</span><span class="pln"> bounds</span><span class="pun">)</span><span class="pln"> </span></code>
+  。
+ </p>
+ <p>
+  平均来说，每张图片包含了21个relationships。
+ </p>
+ <h6 id="25asetofregiongraphs">
+  2.5. A set of region graphs
+ </h6>
+ <p>
+  通过对每一个region description抽取object, attributes和relationships，并将它们整合在一起，可以得到对每一个region的graph representation。形如上面Figure 4的“region graph”部分。
+ </p>
+ <h6 id="26onescenegraph">
+  2.6. One scene graph
+ </h6>
+ <p>
+  Region graph能表示一张图片中的几块区域的信息，作者进一步将这些region graphs组成了
+  <strong>
+   一张
+  </strong>
+  用来表示整张图片信息的scene graph（如上面的Figure 3）。
+ </p>
+ <p>
+  Scene graph是一张图中包含了从region description中抽取的所有objects, attributes和relations的并集。
+ </p>
+ <p>
+  做到了这一步，就可以将图中的多个粒度的信息整合到一起。
+ </p>
+ <p>
+  例如在Figure 4中，最左边的region description告诉我们“fire hydrant is yellow”，而中间的region description告诉我们“man is jumping over the fire hydrant”，将它们放在一起，我们就能知道“man is jumping over a yellow fire hydrant”。
+ </p>
+ <h6 id="27asetofquestionanswerpairs">
+  2.7. A set of question answer pairs
+ </h6>
+ <p>
+  在Visual Genome数据集中，主要包括两种形式的QA：基于整张图片的
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> freeform </span><span class="typ">QAs</span><span class="pln"> </span></code>
+  ，和基于特定图片内特定regions的
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> region</span><span class="pun">-</span><span class="pln">based </span><span class="typ">QAs</span><span class="pln"> </span></code>
+  。
+ </p>
+ <p>
+  对于每张图片，作者收集了6中不同类型的question：
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> what </span></code>
+  ,
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> </span><span class="kwd">where</span><span class="pln"> </span></code>
+  ,
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> how </span></code>
+  ,
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> </span><span class="kwd">when</span><span class="pln"> </span></code>
+  ,
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> who </span></code>
+  和
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> why </span></code>
+  。例如在Figure 4中，
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> Q</span><span class="pun">.</span><span class="pln"> </span><span class="typ">What</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> the woman standing </span><span class="kwd">next</span><span class="pln"> to</span><span class="pun">?</span><span class="pln"> </span></code>
+  是一个
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> freeform QA </span></code>
+  。上面问题类型列表中的每一个问题在每张图片至少被提出一次。
+ </p>
+ <p>
+  而
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> region</span><span class="pun">-</span><span class="pln">based </span><span class="typ">QAs</span><span class="pln"> </span></code>
+  则是通过给定region description提出。例如对于region
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> yello fire hydrant </span></code>
+  ，将会得到region-based QA:
+  <code class="prettyprint prettyprinted" style=""><span class="pln"> Q</span><span class="pun">.</span><span class="pln"> what color </span><span class="kwd">is</span><span class="pln"> the fire hydrant</span><span class="pun">?</span><span class="pln"> A</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Yellow</span><span class="pun">.</span><span class="pln"> </span></code>
+  。
+ </p>
+ <p>
+  Region based QAs完全基于单一description，所以它能够被用来单独研究模型针对特定区域的region description进行QA能力。
+ </p>
+ <h5 id="3relatedwork">
+  3. Related Work
+ </h5>
+ <p>
+  这一节中，作者介绍了一些数据集和model。
+ </p>
+ <h6 id="31datasets">
+  3.1. Datasets
+ </h6>
+ <p>
+  下面的表格介绍了一些现有的数据集与Visual Genome的对比。
+  <br>
+  <img alt="" src="./Visual Genome 浅析 - 为程序员服务_files/FhxHFxmsPdVjLszK1IpkrivPotDr.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  <em>
+   Caltech 101
+  </em>
+  是最早的人工构建的数据集之一。它包含了101个对象类别。每个类别包含了15-30张图片。它的最大的问题在于图片缺乏varibility。
+  <em>
+   Caltech 256
+  </em>
+  将类别增加到了256种，并且弥补了Caltech 101的一些缺点。然而每一个类别内的样本数量仍然比较少。
+  <em>
+   LabelMe
+  </em>
+  的每一个类别包含了多个对象。同时还提供了一个用来让别人标注的web接口。这个接口能够用来帮助构建image segmentation的数据集。
+  <em>
+   Lotus Hill dataset
+  </em>
+  包含了对象(vehicles, man0made objects, animals, etc.)的垂直分解（hierachical decomposition）和segmentations。但是数据集中只有一小部分可以免费使用(freely available)。
+  <em>
+   SUN
+  </em>
+  与LabelMe和Lotus Hill类似，也是一个目标检测的数据集，只是数据量更大。
+  <em>
+   80 Million Tiny Images
+  </em>
+  则是一个更大的数据集，它包括了使用WordNet synsets作为query而检索到的小图片（32×32 pixels）。不过由于这个数据集没有经过人工验证，所以包含了一些错误。
+  <em>
+   YFCC100M
+  </em>
+  则是另一个非常大的数据集，包含了100 million张图片，它包含了人工和机器生成的tags。
+ </p>
+ <p>
+  <em>
+   Pascal VOC
+  </em>
+  将研究领域从分类推向到物体检测。其中包含了20个semantic categories和11,000张图片。
+  <em>
+   ImageNet
+  </em>
+  则使用了WordNet的synsets使用众包的方式拿到了14 million张图片。 并由此产生了ILSVRC Challenge，其中包括好多Computer Vision任务。同时，ILSVRC和PASCAL都提供了针对目标检测、图像分类、图像分割、人类检测(person layout)、动作分类(action classification)等任务的基准测试。
+  <em>
+   MS-COCO
+  </em>
+  数据集包含了328,000张图片和对应的描述语句，以及对80个对象类别的segmentation。曾经最大的基于图像的QA数据集：
+  <em>
+   VQA
+  </em>
+  包含了204,721张图片。每张图片都配有三个question-answer对。 他们收集了一个包含614,163个freeform question和6.1M个ground truth answers(每个问题有10个answers)，并且提供了一个baseline方法。
+ </p>
+ <p>
+  <em>
+   Visual Genome
+  </em>
+  旨在抹平这些数据集之间的鸿沟，不但收集了大量图片种对象的标注，同时还包括了scene graphs，region descriptions和针对image regions的question answer pairs。每张图片平均包括35个objects，要比其他数据库高出一个数量级。同时每张图片还包括了平均26个attributes和21个relationship。最后，相对于其他VQA数据集，这个数据集种包含了1.7 million的question answer pairs。
+ </p>
+ <h6 id="32imagedescriptions">
+  3.2. Image Descriptions
+ </h6>
+ <p>
+  Visual Genome 的一个主要贡献是对一张图片中的多个区域编写的描述。但除了Visual Genome以外，还有其他一些数据集有类似的功能。这些有图片描述的数据集主要可以分成两类：检索经人工生成captions得到的、和直接生成全新的captions的。
+ </p>
+ <p>
+  第一类数据集通常会使用一个similarity metrics来评价图片特征和对应的句子。另一种方法则是将句子和图片投影到一个公共的向量空间或者三元组的空间之中。第二类方法通常使用RNN来生成全新的caption。最新的工作也用到了visual attention模型。
+ </p>
+ <p>
+  这些方法最大的缺点就是，生成的caption通常只描述了图片中的一个方面。这个问题在
+  <em>
+   Flickr 30K
+  </em>
+  和
+  <em>
+   MS-COCO
+  </em>
+  中更为严重。这些数据集通常只会标注非常general的内容，所以会有大量的冗余（多张主体类似，但细节有区别的图片通常标注的caption都差不太多）。这些图片通常只会关注于图片的主体区域，忽略图像中其他的区域和之间的交互信息。
+ </p>
+ <p>
+  而Visual Genome则收集了不只是sene-level的描述信息，还收集了大量更低level的描述。
+ </p>
+ <h6 id="33objects">
+  3.3. Objects
+ </h6>
+ <p>
+  目标检测是CV领域中一个最基础的task。应用范围从照片软件中的人脸识别，到自动驾驶系统中识别其他车辆。这需要将object分类到不同的category，并且在图像中定位到特定对象。
+ </p>
+ <p>
+  Visual Genome将对象视为用来构建视觉场景(visual scene)的核心的组件。之前的数据集主要是进行人脸识别和行人识别。PASCAL VOC和ILSVRC则是将研究拓广到目标检测。但是这些数据集中的图像比较符号化，而且并没有捕捉到这些对象经常出现的场景的原本特质（原句：But the images in these datasets are iconic and do not capture the settings in which these objects usually co-occur）。为了解决这个问题，MS-COCO标注了真实世界中的一些句子，来捕捉对象的上下文信息。然而MS-COCO并没能描述图片中所有objects的信息，它们只包括了80个对象类别。
+ </p>
+ <p>
+  在现实世界中，这些已经存在的数据集中的图片都包含了不知一个对象类别。Visual Genome的任务就是去收集图像中出现的所有视觉元素（visual elements），并且产生了33,877个不同的categories。
+ </p>
+ <h6 id="34attributes">
+  3.4. Attributes
+ </h6>
+ <p>
+  Attributes的出现能够让我们来描述、对比并且更容易地分类对象。尽管有一些object之前没有见过，但是由于attribute的存在，使得我们能够推断出它的信息。
+ </p>
+ <p>
+  Attribute被定义成部位(e.g. "has legs")，形状(e.g. "spherical")或者材料(e.g. "furry")，它能够用来将对象分配到新的类别中。Attributes也能在fine-grain recognition任务中有很好的作用。
+ </p>
+ <p>
+  在Visual Genome中，作者使用了一个泛化的形式(generalized formulation)，但同时又将其扩展成为一种基于对象而非图像的attributes。同时还扩展了多种类型的attributes，例如尺寸(e.g. "small")，姿势(e.g. "bent")，状态(e.g. "transparent")，感情(e.g. "happy")等等。
+ </p>
+ <h6 id="35relationships">
+  3.5. Relationships
+ </h6>
+ <p>
+  关系抽取是NLP和information extraction中一个传统的任务。有基于句法特征的、依存树的、神经网络等方法。它们被用来在句子中抽取两个实体之间的关系。然而在CV领域，很少有工作研究去predicting relationships。但事实上，relationships常常被“间接”地用在其他CV的task中。为对象之间关系进行建模能够improve到场景分类(scene categorization)，而对象之间的三维空间信息能够帮助物体检测。一对对象之间相互的形容词和介词能够用来对视觉关系(visual relationship)进行建模，并且能帮助object localization。
+ </p>
+ <p>
+  在很多以前的视觉认知(visual congnitive tasks)的任务上，Relationship也展示了它们的作用。通过relationship的意义空间(meaning space)，能够提升从图像到句子之间映射的性能。
+ </p>
+ <p>
+  Relationship在结构化表示任务中被称为
+  <em>
+   scene graph
+  </em>
+  。其中带有attribute的结点是对象，而对象之间的relationship则是边。这种表示方式能够用来从图像产生句子，并且帮助图像搜索。Visual Genome中使用了与这个scene graph类似的表达方式，并且将之前其他的工作都考虑其中。
+ </p>
+ <p>
+  近年来，relationship以针对对象之间关系的QA的形式再一次被人们所关注，这些问题询问两个对象之间是否涉及到了某种关系。例如“do dogs eat ice cream?”。这种关系是高阶认知任务中所必备的。作者们也收集了大量的数据来尝试通过切实理解对象之间的相互作用来提升一些任务的性能。
+ </p>
+ <h6 id="36questionanswering">
+  3.6. Question Answering
+ </h6>
+ <p>
+  VQA任务是一个最近被提出的除了对象识别和图像标注以外，用以测试计算机视觉系统理解图像能力的标准任务。最近一段时间有一些VQA benchmark任务被提出。DAQUAR数据集是第一个toy-sized QA benchmark。它基于NYU Depth v2室内场景(indoor scene)的RGB-D图片。而最新的数据集，例如收集了QA pairs的MS-COCO，是通过NLP工具自动生成、或者由人工编写的。
+ </p>
+ <p>
+  之前的数据集中，大多数问题都只是基于简单识别的任务。而且识别的物体都是图片中的主体部分。而且答案通常都非常短。例如DAQUAR中任务的90%的回答，和VQA数据集中89%的答案都是只包含了一个dancing的对象名、属性名、或者数量词。这些限制了它们的多样性，而且会难以抓住图像中的长尾信息。
+ </p>
+ <p>
+  给定一些可用的数据集，即可以用一些模型来处理QA任务。这些模型从SVM分类器和概率推断，到循环神经网络和卷积神经网络。Visual Genome的目标是去通过多种多样的问题类型和很长的问题答案来捕捉图片中的细节。这些问题应该能覆盖很多视觉任务，包括最简单的感知，到复杂的推理。
+ </p>
+ <p>
+  Visual Genome中的QA数据集包括了1.7 million QAs，目前是最大的数据集。
+ </p>
+ <h6 id="37knowledgerepresentation">
+  3.7. Knowledge Representation
+ </h6>
+ <p>
+  视觉世界中的知识表达是一种能够用来处理从动作识别到普通QA等视觉任务的基本能力。然而，要回答“想要了解整个物理世界所需要直到的知识的下限是什么”(what is the minimal viable set of knowledge needed to understand about the physical word)仍然是一个很难的任务。而在后续的研究中发现，概念和它们关系的基本元素之中，确实存在多元化的表示。(原句：It was later proposed that there be a certain plurality to concepts and their related axioms)。这些工作被用来对物理过程进行建模，或者将一系列动作建模成故事脚本：这两个工作都不能使用单独的一张图片来进行描绘，但对图片中的故事来说至关重要。
+ </p>
+ <p>
+  更近的工作，NELL通过从网页上学习基于概率的霍恩子句。DeepQA则提出了一种使用了100中不同技术的概率模型来解决QA问题。其他方法诸如将马尔科夫逻辑网络(Markov logic networks)作为知识表示来在知识库的构建过程中进行统计推断。
+ </p>
+ <p>
+  Visual Genome的工作最类似于利用图像中的relationship来学习common-sense。我们可以将Visual Genome的scene graph理解成为一张图像的密集(dense)的知识表达。这类似于NLP中的knowledge base。
+ </p>
+ <h5 id="4crowsourcingstrategies">
+  4. Crowsourcing Strategies
+ </h5>
+ <p>
+  Visual Genome实际上是通过Amazon Mechanical Turk(AMT)上的众包工人们收集并且验证的。这一节中将会介绍构建这个数据集的pipeline。其中的每一个组件（region descriptions, objects, attributes, relationships, region graphs, scene graphs, questions and answers）都包含了很多个task stages。作者们使用了多种不同的策略来确保数据的准确性并且增加每一个组件的diversity。
+ </p>
+ <h6 id="41crowdworkers">
+  4.1. Crowd Workers
+ </h6>
+ <p>
+  Visual Genome使用了Amazon Mechanical Turk(AMT)作为标注的主要来源。大约33,000位不同的worker参与到了数据集的标注中。这个数据集经过6个月的收集，和长达15个月的迭代测试。大约在AMT上启动了800,000个Human Intelligence Tasks(HITs)。
+  <br>
+  （其他统计略）
+ </p>
+ <h6 id="42regiondescriptions">
+  4.2. Region Descriptions
+ </h6>
+ <p>
+  Visual Genome的主要目标是让认知CV任务的研究成为可能。想要在图像理解上更进一步，就需要研究图像scene graph表达上的各个对象之间的relationship。然而，作者们发现，如果直接让woker标注scene graph，那么数据就倾向于变得非常简单。这样会经常出现一些常见的标注，例如
+  <em>
+   wearing(man, shirt)
+  </em>
+  而不是图像中的主要物体。
+ </p>
+ <p>
+  为了克服这个问题，作者们发现，如果让worker直接用文本描述图片，那么worker倾向于从图片中的主体部分开始写描述，然后一个接着一个地描述其他部分。
+ </p>
+ <p>
+  当一张全新的图片进入这个pipeline之后，它会被送给第一个worker进行标注。他会先话三个bounding boxes，然后对区域内的内容写三个descriptions。接下来图片会继续送到另一个worker来进行跟之前类似的标注。Workers被明确地鼓励去写之前没有写过的description。这个过程将会被不断重复，直到每张图片有50个区域进行了人工标注。为了防止workers们浏览之前标注过的全部description，只选择top 7个最相近的description。
+ </p>
+ <p>
+  Visual Genome通过BLEU来判断标注description之间的相似性。并且需要避免标注与下面两类数据相似：
+ </p>
+ <ol>
+  <li>
+   Image-specific descriptions: 对这张图片的所有之前编写过的description。
+  </li>
+  <li>
+   Global image descriptions: 所有图片最经常出现的top 100条description。这样能够防止一些非常common的短语，比如“sky is blue”。这Top 100是随着标注进行不断更新的。
+  </li>
+ </ol>
+ <p>
+  最后，作者要求workers在画bounding boxes的时候必须满足一个要求：
+  <strong>
+   coverage
+  </strong>
+  (覆盖)。也就是说，包围盒必须完整地覆盖了描述中提到的所有对象。下图是一个标注的例子：
+ </p>
+ <p>
+  <img alt="FggYmVkblFW1hTKjVvYmzyeOjFuz" src="./Visual Genome 浅析 - 为程序员服务_files/FggYmVkblFW1hTKjVvYmzyeOjFuz.png" onerror="return imgError(this)">
+ </p>
+ <h6 id="43objects">
+  4.3. Objects
+ </h6>
+ <p>
+  一旦一张图片中有50个区域被标注了description，下一步就是从描述中抽取visual objects。每一个描述都会被交给一个众包worker，他需要基于描述文本和图片包围盒中的事实来标注其中的object。
+ </p>
+ <p>
+  例如上面的Figure 4. 有这样一句描述“Woman in shorts is standing behind the man”。 一个worker应该能从其中抽取三个对象：woman, shorts和man。然后worker应该对其中的每一个object都画一个bounding box，并且要求这个包围盒满足两个条件：
+  <strong>
+   coverage
+  </strong>
+  和
+  <strong>
+   quality
+  </strong>
+  。Coverage和之前提到的要求一样，而quality则是指包围盒应该尽可能地紧密围绕着object，甚至严格紧密到“如果长款再减少1个像素，就不满足coverage要求”。当然，一个像素对于worker来说太难了，所以这个要求被放宽到了4个像素。
+ </p>
+ <p>
+  对于一张图片来说，不同的descriptions可能会用不同的词汇提到同一个object，例如
+  <em>
+   man
+  </em>
+  有时在另一个描述中被写成
+  <em>
+   person
+  </em>
+  . 所以可以通过这种方式来构建一个co-reference chains。也就是说，当每一个region description传输到一个worker时，他能看到一个之前产生的objects作为建议。这就使得worker可以选择一个之前画过的bounding box，并且标记成为了
+  <em>
+   man
+  </em>
+  ，而不再需要新画一个box并且标记称为
+  <em>
+   person
+  </em>
+  。
+ </p>
+ <p>
+  最终，为了加快worker完成这项任务，作者们使用了斯坦福的dependency paeser来自动从句子中抽取名词，并传递给worker作为suggestions。然而parser总是设法去发现尽可能多的名词，所以有时候它会忽略掉复合名词。所以作者们没有完全依赖于这个自动的方法，而是将这个parser和众包任务相结合，在不损失精度的情况下尽可能增加效率。
+ </p>
+ <h6 id="44attributesrelationshipsandregiongraphs">
+  4.4. Attributes，Relationships, and Region Graphs
+ </h6>
+ <p>
+  一旦每个region description中的所有对象都被抽取出来，接下来可以去抽取这些region中所描述的attributes和relationships了。作者将每一个region description和在其中抽取的objects发给每一个worker，并且要求他们基于description，为objects添加一些attributes，或者将两个objects通过relationships连接起来。例如从描述“woman in shorts is standing behind the man”中，worker将会抽取出object "
+  <em>
+   woman
+  </em>
+  "的一个attribute "
+  <em>
+   standing
+  </em>
+  "。以及两个关系
+  <em>
+   in(woman,shorts)
+  </em>
+  和
+  <em>
+   behind(woman,man)
+  </em>
+  。然后将每一段region description中抽取到的objects、attributes和relationships拼在一起，组成一个region graph。有一些描述，例如“it is a sunny day”并不包含任何对象，所以也就没有对应的region graph。Workers被要求对这些description不要生成任何graphs。最后，将所有的region graphs通过在不同的region graphs中出现的co-referenced objects连接在一起，组成了scene graphs。
+ </p>
+ <h6 id="45scenegraphs">
+  4.5. Scene Graphs
+ </h6>
+ <p>
+  Scene graph就是从所有region descriptions抽取到的region graphs连接在一起得到的。作者将region graphs中表示相同object的结点merge在一起。例如，在两个不同的region graphs中出现的
+  <em>
+   man
+  </em>
+  和
+  <em>
+   person
+  </em>
+  可能表示了图片中的同一个对象。作者是通过两个bounding box之间交集超过并集的90%来判断是否是同一个对象的。然而这种假设可能会产生一些false positive。所以在merging两个对象时，会要求worker做一个确认，来判断这对objects是不是真的几乎重叠，并且确定是同一个object。同时，这里还对同一个object的多个bounding box做了一个combine：当两个bounding box的overlap的程度超过0.9，就将他们的交集作为新的bounding box。下图解释了这个过程：
+ </p>
+ <p>
+  <img alt="Fqj_fP--jRQvnX3fLhmA6wGT2Gji" src="./Visual Genome 浅析 - 为程序员服务_files/Fqj_fP--jRQvnX3fLhmA6wGT2Gji.png" onerror="return imgError(this)">
+ </p>
+ <h6 id="46questionsandanswers">
+  4.6. Questions and Answers
+ </h6>
+ <p>
+  为了产生QA pairs，作者要求AMT的workers针对一张图片去写一些questions和answers。为了确保质量，workers应该遵循下面的三条规则：
+ </p>
+ <ol>
+  <li>
+   问题应该以“six Ws”开始 (who, what, where, when, why and how)
+  </li>
+  <li>
+   避免问题模棱两可和需要臆断的问题(ambiguous and speculative questions)
+  </li>
+  <li>
+   应该精确而且唯一，而且这个问题必须当且仅当给定这张图片的时候才能回答。（译注：防止1+1=?这样的问题）
+  </li>
+ </ol>
+ <p>
+  Visual Genome收集了两类QAs：freeform QAs和region-based QAs。对于freeform QA，要求worker要看图然后写八个关于这张图的QA pairs。为了鼓励diversity，作者强制workers在他们编写的8个pairs中必须包含至少6个Ws中的3个.对于region-based QA，要求worker基于给定的region写一个pair。所选的regions是那些拥有较大面积（通常超过5k像素）和用长短语描述（超过4个words）的。这将会用与标注8个freeform QAs相似的代价获得大约20个region-based pairs。宏观上来看，freeform QA更加diverse。而region-based QA倾向于用更低的代价获得更多factual QA pairs。
+ </p>
+ <h6 id="47verification">
+  4.7. Verification
+ </h6>
+ <p>
+  所以Visual Genome数据刚一完成标注就会立刻进入verification stage。这个stage将会帮助消除不正确的labeled objects, attributes和relationships。同时也会帮助删除一些QA pairs。这些QA pairs通常是“正确但是很模糊”（例如"This person seems to enjoy the sun."）、有主观色彩（例如"room looks dirty"），或者很武断的("Being exposed to hot sum like this may cause cancer")。
+ </p>
+ <p>
+  Verification通过两个不同的策略进行：majority voting和rapid judgements。数据集中的所有components都会用majority voting方法进行验证。即rang三个不同的workers来评价每个annotation并且基于它正确与否而投票。只有当最少两个worker认为它是正确的时候才会去加入到Visual Genome中。而rapid judgement方法只会被用来加速object的验证。（具体方法参考原文中所引用的论文）
+ </p>
+ <h6 id="48canonicalization">
+  4.8. Canonicalization
+ </h6>
+ <p>
+  所有descriptions和QAs都是完全由worker产生的自由文本。对其内容没有任何限制（译注：词表可能会非常大）。例如，在标注过程中并不强制要求worker将
+  <em>
+   man
+  </em>
+  、
+  <em>
+   person
+  </em>
+  、
+  <em>
+   boy
+  </em>
+  等都统一标为
+  <em>
+   man
+  </em>
+  。为了减少歧义，作者将所有的objects，attributes，relationships和文本(region description 与QAs)中的名词短语都映射到了WordNet的synsets中。
+ </p>
+ <p>
+  例如，
+  <em>
+   person,boy
+  </em>
+  和
+  <em>
+   man
+  </em>
+  将会被分别映射到synset：
+  <em>
+   person.n.01(a human being), male_child.n.01(a youthful male person)
+  </em>
+  和
+  <em>
+   man.n.03(the generic use of the word to refer to any human being)
+  </em>
+  。而刚好WordNet的层级结构使得这三种不同的表达最终都能整合到相同的概念
+  <em>
+   person.n.01 (a human being)
+  </em>
+  上，这可以通过lowest common ancestor来实现。
+ </p>
+ <p>
+  （具体的mapping过程跟平常NLP的基本流程类似，就不赘述了）
+ </p>
+ <p>
+  （自动mapping的方法还是有可能产生一些错误，所以，again，又一次用到了AMT来纠正。此处矫正方法并不是直接让worker判断对错，而是将label和额外4个选项一起交给worker，让worker判断哪个更好）
+ </p>
+ <h5 id="5datasetstatisticsandanalysis">
+  5. Dataset Statistics and Analysis
+ </h5>
+ <h6 id="51imageselection">
+  5.1. Image Selection
+ </h6>
+ <p>
+  Visual Genome数据集包含108,077张图片，它们是MS-COCO中的328,000张图片和YFCC100M的100million张图片的交集。这使得Visual Genome的annotations能用到YFCC的tags和MS-COCO的segmentations和全图标题(full image captions)。这些图像都是来自真实世界，没有抽象图标，而且是由Flickr用户上传的图像。
+ </p>
+ <p>
+  图像的分辨率从72像素宽到1280像素宽。平均宽度是500像素。如果使用跟ImageNet一样的方法，可以将Visual Genome的图像映射到972个ImageNet synsets中。而objects、attributes和relationships可以被mapping到超过18K个Network synsets中。
+ </p>
+ <p>
+  下面的图片显示了最常见的一些synsets：
+  <br>
+  <img alt="FgxsdHGvH_5FYKaFW95xAZ0eey_D" src="./Visual Genome 浅析 - 为程序员服务_files/FgxsdHGvH_5FYKaFW95xAZ0eey_D.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  在所有图片中，“ski”是最常见的synset（2612张图片）。然后是“ballplayer”和“racket”。Visual Genome偏向选择人的图片，不过这些图片内部的diversity也很大。
+ </p>
+ <h6 id="52regiondescriptionstatistics">
+  5.2. Region Description Statistics
+ </h6>
+ <p>
+  Visual Genome中的一个主要组件就是region description。每张图片平均包括50个带有包围盒和描述短语的区域。下图是一个例子。
+ </p>
+ <p>
+  <img alt="Fqo9iRD3ATUbuVrN1VEe_dXBb59v" src="./Visual Genome 浅析 - 为程序员服务_files/Fqo9iRD3ATUbuVrN1VEe_dXBb59v.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  这张图只显示了50个description中的6个bounding box。这些描述表现出了很强的diversity，并且都能只关注在要给对象。
+ </p>
+ <p>
+  Region descriptions必须对所描述的个体对象有足够的特指（比如"A bag"），但是它们也需要足够的general来描述一个足够高层次的概念（e.g. "A man being chased by a bear"）。定性地说，当一个region覆盖了足够大的面积的时候，它就倾向于general的描述。而当区域覆盖图片的一小部分的时候，就倾向于给出一个具体的描述。下图中展示了不同region的宽度和高度下的region的数量分布
+ </p>
+ <p>
+  <img alt="FmHZ84MCbu5wEX68mB_qv0M0hIl0" src="./Visual Genome 浅析 - 为程序员服务_files/FmHZ84MCbu5wEX68mB_qv0M0hIl0.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  从Figure 15 (a)中可以看出，大部分区域落在10%-15%的宽度。而有大量的区域覆盖了100%的图像宽度，这些区域通常是“sky”、“ocean”、“snow”、“mountains”等等。因为没法直接找到边界，所以就跨越了整张图片。Figure 15 (b)情况类似，但是不像宽度分布图那样有大量高度覆盖了整张图的情况。
+ </p>
+ <p>
+  下图展示了这些region description长度（word count）的分布。
+ </p>
+ <p>
+  <img alt="Fn1bWDVEsJ8tvue9DBvy-NRjRZgc" src="./Visual Genome 浅析 - 为程序员服务_files/Fn1bWDVEsJ8tvue9DBvy-NRjRZgc.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  Description的平均长度是5个words。最少1个词，最多12个词。下图是在region description中的最常见的短语，停用词已经被去掉了。
+ </p>
+ <p>
+  <img alt="Fq0oJtvAbR8ZM8EyICY7k1ewuDcr" src="./Visual Genome 浅析 - 为程序员服务_files/Fq0oJtvAbR8ZM8EyICY7k1ewuDcr.png" onerror="return imgError(this)">
+ </p>
+ <p>
+  （后面的统计和实验实在太多了。。。。而且原文写的都很straightforward。。。我实在懒得翻译了了。。。就这样吧）
+ </p>
+ <h5 id="spanidjumpspan">
+  整理
+ </h5>
+ <p>
+  说了这么多，其实Visual Genome就是一个结合了多种信息源的数据集。其中包含了很多很多图片（108,077张)，和很多region description和object和attribute和relationship和QA pairs。其中图像是MS-COCO和YFCC100M的交集，这就使得这些图片能同时使用MS-COCO和YFCC100M的部分标注信息。
+ </p>
+ <p>
+  想要了解这个数据集的结构，就要从数据集的产生开始说，作者使用亚马逊的众包标注服务，构建了一整套pipeline。标注过程分为多个stage，每一个stage都是又众包worker完成的简而言之，就是以下的过程：
+ </p>
+ <ol>
+  <li>
+   首先，给定一张图片，worker需要手工撰写“region description”，并且用bounding box框出这个region。
+  </li>
+  <li>
+   得到region description之后，worker开始从这些文本中抽object（通常是名词），同时再用bounding box严格地框住这些object。
+  </li>
+  <li>
+   有了object之后，再根据region description、图片本身等数据，人工抽取这些object的attribute和region内部多个object之间的relationship。将这些东西combine在一起就得到了一个region graph
+  </li>
+  <li>
+   有了region graph和其他各种数据之后，找到各个region graph中公共的object（可以通过包围盒的overlap来判断该标注的object是否对应了同一个object）。用这些公共的object作为桥梁，将这些region graph连接在一起，就形成了scene graph。
+  </li>
+  <li>
+   与此同时，再找一伙worker，给图片标QA pairs。QA Pairs 有两种。
+   <br>
+   5.1. 第一种是freeform QA pairs。把图片给worker，让worker针对这个图片提出至少8个问题（必须是以who, what, where, when, why and how开头的问题）。同时这个8个问题中必须包含这六类中的三类。
+   <br>
+   5.2. 第二种是region-based QA pairs。把region给worker，让worker针对这个region提出一个问题。
+  </li>
+  <li>
+   再找一伙worker做double check。如果符合要求，就把所有这些东西添加到数据集中。
+  </li>
+  <li>
+   然后就得到了Visual Genome
+  </li>
+ </ol>
+ <p>
+  总结：有钱任性。
+ </p>
+</div>
+<div class="like">
+    <a href="javascript:void(0)" class="assertLogin" rel="nofollow" target="_self">点赞</a>
+</div>
+<div class="tags">
+</div>
+
+<div class="author">
+    <span class="name">作者：<a href="http://ju.outofmemory.cn/feed/1926/" title="Friskit的粉碎机">Friskit的粉碎机</a></span>
+    <div class="small">
+        咔嚓咔嚓咔嚓
+    </div>
+    <div class="small">原文地址：<a rel="nofollow external" target="_blank" href="http://friskit.me/2018/02/09/vqa-visual-genome-dataset/">Visual Genome 浅析</a>, 感谢原作者分享。</div>
+</div>
+
+<div class="pn">
+    <span class="next"><mark>→</mark><a href="http://ju.outofmemory.cn/entry/345003">[研究笔记]由RNN的Discrepancy现象联想到深度学习与GAN</a></span>
+    <span class="pre"><mark>←</mark><a href="http://ju.outofmemory.cn/entry/340184">2018新年快乐</a></span>
+</div>
+
+<div class="comments">
+<a name="comments"></a>
+</div>
+
+
+<div class="newComment"><a name="newComment"></a>
+<h3>发表评论</h3>
+<form action="http://ju.outofmemory.cn/entry/comment/add" method="POST">
+    <input type="hidden" name="targetId" value="343958">
+    <input type="hidden" name="title" value="回复:Visual Genome 浅析">
+    <input type="hidden" name="replyId">
+    <textarea name="content" cols="100" rows="6" class="mdInput" style="width:98%"></textarea>
+    <p>
+        <button type="button" id="btnComment">发表评论</button><span id="commentTip"></span>
+    </p>
+</form>
+</div>
+
+
+
+
+</div>
+<div class="sidebar">
+    <div class="tgSide booksNail"><div class="cTitle">好书推荐</div><div><ul><li><div class="nail"><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSHloUBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFAaWhIdS0IJRmtuV1NCDW5FZ2dpHT1jOxR0W09ScgR1Dh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBQGVsUCxEGXCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUCVBpcCltXWwg%3D" target="_blank"><img src="./Visual Genome 浅析 - 为程序员服务_files/code-clean.jpg"></a></div><div class="title"><a class="bookName" href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSHloUBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFAaWhIdS0IJRmtuV1NCDW5FZ2dpHT1jOxR0W09ScgR1Dh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBQGVsUCxEGXCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUCVBpcCltXWwg%3D" target="_blank"><nobr>代码整洁之道</nobr></a>[<a href="https://www.amazon.cn/gp/product/B0031M9GHC/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B0031M9GHC&amp;linkCode=as2&amp;tag=outofmemorycn-23" target="_blank">亚马逊</a>]</div></li><li><div class="nail"><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSGlgXASJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFQYWRYdS0IJRmtcZW5nT0IYUWBOYUt%2FK05jRgRTUwhlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgXCxQDUCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUGVhlYCltXWwg%3D" target="_blank"><img src="./Visual Genome 浅析 - 为程序员服务_files/business-architecture-pattern.jpg"></a></div><div class="title"><a class="bookName" href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSGlgXASJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFQYWRYdS0IJRmtcZW5nT0IYUWBOYUt%2FK05jRgRTUwhlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgXCxQDUCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUGVhlYCltXWwg%3D" target="_blank"><nobr>企业应用架构模式</nobr></a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwZSGlgXASJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMTAFQYWRYdS0IJRmtcZW5nT0IYUWBOYUt%2FK05jRgRTUwhlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUBheEAMUAFwrWxAKEgJQHVgXCxQDUCtcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAxUGVhlYCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B003LBSRDM/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B003LBSRDM&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]</div></li><li><div class="nail"><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwdUGlgXBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMSBlQYWRIdS0IJRmtGBW1OHk5ac2IXYS8cLX1bYkcPXgFlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHFwTAhcOUytcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAhMGVhlcCltXWwg%3D" target="_blank"><img src="./Visual Genome 浅析 - 为程序员服务_files/head-first-design-pattern.jpg"></a></div><div class="title"><a class="bookName" href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwdUGlgXBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMSBlQYWRIdS0IJRmtGBW1OHk5ac2IXYS8cLX1bYkcPXgFlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHFwTAhcOUytcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAhMGVhlcCltXWwg%3D" target="_blank"><nobr>Head&nbsp;First设计模式</nobr></a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEwdUGlgXBSJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQMSBlQYWRIdS0IJRmtGBW1OHk5ac2IXYS8cLX1bYkcPXgFlDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHFwTAhcOUytcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsUAhMGVhlcCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B0011FBU34/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B0011FBU34&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]</div></li><li><div class="nail"><a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEgBQGF8WCiJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQIVAlYfWB0dS0IJRmsddntuCRIvcGJLeSJJBmhEd25XbDxDDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHVIWAREGVStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsVBRcEURhTCltXWwg%3D" target="_blank"><img src="./Visual Genome 浅析 - 为程序员服务_files/program-essense.jpg"></a></div><div class="title"><a class="bookName" href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEgBQGF8WCiJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQIVAlYfWB0dS0IJRmsddntuCRIvcGJLeSJJBmhEd25XbDxDDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHVIWAREGVStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsVBRcEURhTCltXWwg%3D" target="_blank"><nobr>编程珠玑（续 修订版）</nobr></a>[<a href="http://union-click.jd.com/jdc?e=0&amp;p=AyIHZR5aEQISA1AYUyUCEgBQGF8WCiJDCkMFSjJLQhBaUAscSkIBR0ROVw1VC0dFFQIVAlYfWB0dS0IJRmsddntuCRIvcGJLeSJJBmhEd25XbDxDDh43UxhZHQQRBVIZaxUDEwZUElsUBxA3ZRtaJVB83%2BOtg7CzDtP%2FlI6dlSIBUB9fHQEQAFwrWxAKEgBRHVIWAREGVStcJVlHaVMbXkAGRgcASAlBAkA3ZStr&amp;t=W1dCFBBFC1pXUwkEAEAdQFkJBVsVBRcEURhTCltXWwg%3D" target="_blank">京东</a> &nbsp; <a href="https://www.amazon.cn/gp/product/B0150BMQDM/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B0150BMQDM&amp;linkCode=as2&amp;tag=oucn-23" target="_blank">亚马逊</a>]</div></li></ul></div></div><div class="similar entry">
+    <span class="title">您可能感兴趣的博客</span>
+    <div><ul class="similarEntries">
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/482/" title="jametong">jametong</a> 发表 <span class="time" title="2013-04-05 13:25:00">5年前</span></span>
+<a href="http://ju.outofmemory.cn/entry/18917" class="codeTitle">Jame’s Reading 04-05</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/4297/" title="heguanpei">heguanpei</a> 发表 <span class="time" title="2018-07-03 07:11:04">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360741" class="codeTitle">326从上海中心到澳门口岸（2008-2018）</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 02:22:04">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360740" class="codeTitle">saltstack取经之路</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 02:22:04">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360739" class="codeTitle">saltstack取经之路</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 02:36:49">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360738" class="codeTitle">AWVS与OSSEC双剑合璧实现自动扫描</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 02:36:49">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360737" class="codeTitle">AWVS与OSSEC双剑合璧实现自动扫描</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 02:50:29">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360736" class="codeTitle">VPN杂谈</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 03:04:45">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360735" class="codeTitle">自建CDN实战经验合集之——Bind9在内部DNS中的应用</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 05:54:46">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360734" class="codeTitle">从模板开始打造自己的Zabbix监控</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/898/" title="admin">admin</a> 发表 <span class="time" title="2018-07-03 06:29:40">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360733" class="codeTitle">MySQL VS MongoDB 你会如何选择？</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/2603/" title="李翌 (liguangyi08@gmai">李翌 (liguangyi08@gmai</a> 发表 <span class="time" title="2018-06-24 00:00:00">11天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360732" class="codeTitle">不要用JWT替代session管理（上）：全面了解Token,JWT,OAuth,SAML,SSO</a>
+</li>
+    <li><span class="meta"><a href="http://ju.outofmemory.cn/feed/4794/" title="OutMan">OutMan</a> 发表 <span class="time" title="2018-07-03 05:51:33">2天前</span></span>
+<a href="http://ju.outofmemory.cn/entry/360731" class="codeTitle">How to change ingress-nginx nginx’s configuration？</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+
+    <div>&nbsp;</div>
+    <div class="similar code">
+    <span class="title">您可能感兴趣的代码</span>
+    <div><ul class="similarCodes">
+    <li><span class="time" title="2018-03-30 21:56:50">3月前</span><a href="http://outofmemory.cn/code-snippet/83851/java-zidongshibie-user-upload-wenbenwenjian-coding">java自动识别用户上传的文本文件编码</a> by <a href="http://outofmemory.cn/user/24">Hugh</a>
+</li>
+    <li><span class="time" title="2018-03-30 21:47:37">3月前</span><a href="http://outofmemory.cn/code-snippet/83850/JDK7-many-exception-buhuo-block">JDK7 的多异常捕获块</a> by <a href="http://outofmemory.cn/user/60">liuyan814</a>
+</li>
+    <li><span class="time" title="2018-03-30 21:36:46">3月前</span><a href="http://outofmemory.cn/code-snippet/83849/Android-Launcher3-away-suoyou-application-list-hengping-shi-zuoyou-liangce-liukong">Android Launcher3去掉所有应用列表，横屏时左右两侧的留空</a> by <a href="http://outofmemory.cn/user/120">香格里拉登</a>
+</li>
+    <li><span class="time" title="2018-03-30 21:28:21">3月前</span><a href="http://outofmemory.cn/code-snippet/83848/Android-get-device-information">Android获取设备信息</a> by <a href="http://outofmemory.cn/user/84">朱凯迪</a>
+</li>
+    <li><span class="time" title="2018-03-30 21:16:35">3月前</span><a href="http://outofmemory.cn/code-snippet/83847/Android-augment-chumo-shoushi-identify-jianting">Android添加触摸手势识别监听</a> by <a href="http://outofmemory.cn/user/60">liuyan814</a>
+</li>
+    <li><span class="time" title="2018-03-30 21:09:54">3月前</span><a href="http://outofmemory.cn/code-snippet/83846/Android-call-system-shexiangtou-paizhao-bing-ba-photograph-save-come-bendi-ranhou-display-Imageview">Android调用系统摄像头拍照，并把照片保存到本地，然后显示在Imageview</a> by <a href="http://outofmemory.cn/user/168">demon</a>
+</li>
+    <li><span class="time" title="2018-03-30 20:54:53">3月前</span><a href="http://outofmemory.cn/code-snippet/83845/Android-get-dangqian-mobile-dianhuahaoma">Android获取当前手机的电话号码</a> by <a href="http://outofmemory.cn/user/84">朱凯迪</a>
+</li>
+    <li><span class="time" title="2018-03-30 20:48:40">3月前</span><a href="http://outofmemory.cn/code-snippet/83844/ba-picture-zhuanhuancheng-yuanxing-Android-code">把图片转换成圆形的Android代码</a> by <a href="http://outofmemory.cn/user/48">云香水识</a>
+</li>
+    <li><span class="time" title="2018-03-30 20:37:05">3月前</span><a href="http://outofmemory.cn/code-snippet/83843/K-means-algorithm-Spark-Demo">K-means算法(Spark Demo)</a> by <a href="http://outofmemory.cn/user/108">Koon.LY</a>
+</li>
+    <li><span class="time" title="2018-03-30 20:26:43">3月前</span><a href="http://outofmemory.cn/code-snippet/83842/JavaMail-send-email-class">JavaMail 发送邮件类</a> by <a href="http://outofmemory.cn/user/36">clt</a>
+</li>
+    <li><span class="time" title="2018-03-30 20:06:17">3月前</span><a href="http://outofmemory.cn/code-snippet/83841/Android-boda-phone-code">Android 拨打电话的代码</a> by <a href="http://outofmemory.cn/user/156">落叶随风</a>
+</li>
+    <li><span class="time" title="2018-03-30 19:54:58">3月前</span><a href="http://outofmemory.cn/code-snippet/83840/single-support-generic-DAO-jiekoulei">一个支持泛型的DAO接口类</a> by <a href="http://outofmemory.cn/user/144">廖钊权</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+    
+    
+    
+    
+</div>
+
+
+</div>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/jquery-1.11.3.min.js.下载"></script>
+<script>var isMobile= $('.sidebar').css('clear') == 'both';</script>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/loginUser_v5" charset="utf-8"></script>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/prettify.js.下载" type="text/javascript"></script>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/5.js.下载"></script>
+<script>
+    var removeAD=true;
+    var voteTargetType='entry';var voteTargetId =343958;
+    var voting=false;
+    function onGetVoteStatus(status){
+        if(status.type != 0){
+            voting=true;
+            $('.like a').html('0赞');
+        }
+    }
+    $('.like a').click(function(){
+        if (!voting){
+            voting = true;
+            $.post("/"+voteTargetType+"/"+voteTargetId+"/vote", { type: '1'},
+            function (response, textStatus){
+                if(!response.success){
+                    alert(response.message);
+                } else {
+                    $('.like a').html((response.upCount||1) + '赞');
+                }
+            }, "json");
+        } else {
+            $('.like a').html('已赞');
+        }
+    });
+    $('pre,code').removeClass('prettyprint').addClass('prettyprint');
+    prettyPrint();
+    function displayPv(pv){
+        $('.pv b').html(pv + '');
+    }
+    function resizeImg(o,maxWidth) {
+        var img = $(o);
+        if(img.width() > maxWidth) {
+            var h = Math.round(maxWidth / img.width() * img.height());
+            img.width(maxWidth).height(h);
+        }
+    }
+    function resizeImgs(){
+        var maxWidth = $('div.author').width();
+        $('.content img').each(
+            function(i,o){resizeImg(o,maxWidth);}
+        );
+        var tg = $('.tgBD');
+        if(tg.width()>maxWidth){
+            tg.width(maxWidth+'px').css({'text-align':'center','overflow':'hidden',border:'1px solid transparent','border-radius':'2px','-moz-border-radius':'2px'});
+        }
+    }
+    $(resizeImgs);
+    $(window).resize(resizeImgs);
+    function showBooks(books) {
+        var h = '<div class="tgL books"><span>&nbsp;</span>好书：';
+        var maxCount = 5;
+        var lineCn = books.length>maxCount?maxCount:books.length;
+        function getProvidersHtml(b) {
+            var h='';
+            if (b.providers) {
+                h += '[';
+                var first = true;
+                for (var p in b.providers) {
+                    var pUrl = b.providers[p]['url'];
+                    
+                    if (first) {
+                        first = false;
+                    } else {
+                        h += ' &nbsp; ';
+                    }
+                    h += ('<a href="' + pUrl +'" target="_blank">' + p +  '</a>');
+                    
+                }
+                h += ']';
+            }
+            return h;
+        }
+
+        for (var i=0; i<lineCn;i++) {
+            if (i>0) h += '<span class="sep"> | </span>';
+            var book = books[i];
+            h += ('<a href="'+ book.url +'" target="_blank">' + book.title + '</a>');
+            h += getProvidersHtml(book);
+        }
+
+
+        h += '</div>';
+        $(h).insertBefore($('div.wrap'));
+
+        var rightHtml = '<div class="tgSide booksNail"><div class="cTitle">好书推荐</div>';
+        rightHtml += '<div><ul>';
+        var startIdx = books.length > 4 ? books.length-4 : 0;
+        for (var i=startIdx; i<books.length;i++) {
+            var book = books[i];
+            rightHtml += ('<li><div class="nail"><a href="' + book.url + '" target="_blank"><img src="//outofmemory.cn/static/book/' + book.image + '" /></a></div>');
+            rightHtml += ('<div class="title"><a class="bookName" href="'+book.url+'" target="_blank"><nobr>'+book.title+ '</nobr></a>');
+            var providerH = getProvidersHtml(book);
+            rightHtml += providerH;
+            rightHtml += '</div></li>';
+        }
+        rightHtml += '</ul></div>';
+        rightHtml += '</div>';
+
+        $(rightHtml).insertBefore($('div.sidebar div:first'))
+    }
+</script>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/list" type="text/javascript"></script>
+
+
+<footer class="foot">
+© 2015 <a href="http://outofmemory.cn/">内存溢出</a>
+</footer>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-36036446-1', 'outofmemory.cn');
+    ga('send', 'pageview');
+    ga('set',  '&uid', window.loginUser.id); // 使用已登录的 user_id 来设置用户 ID。
+</script>
+
+<div class="bdtj"><script type="text/javascript">
+
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?2051de3619785a7bff6213250ea9fbbd";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</div>
+<script>
+    function displayTG(k, h){
+        var display = typeof removeAD != 'undefined' && !removeAD;
+        if (!display) {
+            return;
+        }
+        if(k == 'jukeTopLine'){
+            $(h).insertBefore($('div.wrap'));
+        }
+    }
+    if(parseInt($('.content').css('marginRight')) > 50){
+        var contentHeight=$('.content').height();var sideHeight=$('.sidebar').height();
+        if(contentHeight<sideHeight) $('.content').css({'minHeight':sideHeight+'px'});
+    }
+</script>
+
+
+
+
+<script>window.__key__ = '5404060533d369f80c0f3dd78b6d568e';</script>
+<script src="./Visual Genome 浅析 - 为程序员服务_files/aes.js.下载" type="text/javascript"></script>
+<script>
+$('form').submit(
+        function(e){
+            $('input[type="password"]').each(function(o){
+                var oPwd = $(this);
+                var pwd = oPwd.val();
+                if (pwd){
+                    var key = CryptoJS.enc.Latin1.parse(window.__key__.substring(0, 16));
+                    var iv = CryptoJS.enc.Latin1.parse(window.__key__.substring(16));
+                    //加密
+                    var encrypted = CryptoJS.AES.encrypt(pwd, key, {iv:iv,mode:CryptoJS.mode.CBC,padding:CryptoJS.pad.ZeroPadding});
+                    oPwd.val(encrypted.toString());
+                }
+            });
+        }
+);
+</script></body></html>

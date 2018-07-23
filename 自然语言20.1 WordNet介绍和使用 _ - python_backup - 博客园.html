@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://www.cnblogs.com/webRobot/p/6094311.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="never">
+<title>自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/bundle-red_autumnal_leaves.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/bundle-red_autumnal_leaves-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/webRobot/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/webRobot/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/webRobot/wlwmanifest.xml">
+<script async="" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/analytics.js.下载"></script><script src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'webRobot', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/webRobot/"><img id="blogLogo" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/webRobot/">python_backup</a></h1>
+<h2>视频系列教程
+http://dwz.cn/riskModel</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/webRobot/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/python_backup">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/webRobot/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/webRobot/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 361&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 9</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/webRobot/p/6094311.html">自然语言20.1 WordNet介绍和使用 _</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><div class="tit">
+<h3 class="f-thide"><span style="color: #ff0000; font-size: 18px"><a href="https://study.163.com/course/introduction.htm?courseId=1005269003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share" target="_blank"><span style="color: #ff0000">sklearn实战-乳腺癌细胞数据挖掘</span></a></span></h3>
+</div>
+<p><span style="color: #ff0000; font-size: 18px"><a href="https://study.163.com/course/introduction.htm?courseId=1005269003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share" target="_blank"><span style="color: #ff0000"><strong>https://study.163.com/course/introduction.htm?courseId=1005269003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share</strong></span></a></span></p>
+<p>&nbsp;</p>
+<p><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/895802-20180417215535185-501042650.png" alt=""></p>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000">Wordnet是一个词典。每个词语(word)可能有多个不同的语义，对应不同的sense。而每个不同的语义（sense）又可能对应多个词，如topic和subject在某些情况下是同义的，一个sense中的多个消除了多义性的词语叫做lemma。例如，“publish”是一个word，它可能有多个sense：</span></p>
+<p><span style="color: #ff0000">次数可以用来判断高频词的权重</span></p>
+<p>1. (39) print, publish -- (put into print; "The newspaper published the news of the royal couple's divorce"; "These news should not be printed")</p>
+<p>2. (14) publish, bring out, put out, issue, release -- (prepare and issue for public distribution or sale; "publish a magazine or newspaper")</p>
+<p>3. (4) publish, write -- (have (one's written work) issued for publication; "How many books did Georges Simenon write?"; "She published 25 books during her long career")</p>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000">在第一个sense中，print和publish都是lemma。Sense 1括号内的数字39表示publish以sense 1在某外部语料中出现的次数。显然，publish大多数时候以sense 1出现，很少以sense 3出现。</span></p>
+<p>&nbsp;</p>
+<p>WordNet的具体用法</p>
+<p>NLTK是<a class="replace_word" title="Python知识库" href="http://lib.csdn.net/base/python" target="_blank">Python</a>的一个自然语言处理工具，其中提供了访问wordnet各种功能的函数。下面简单列举一些常用功能：</p>
+<p>&nbsp;</p>
+<p>得到wordnet本身：</p>
+<p>from nltk.corpus import wordnet</p>
+<p>&nbsp;</p>
+<p>获得一个词的所有sense，包括词语的各种变形的sense：</p>
+<p>wordnet.synsets('published')</p>
+<p>[Synset('print.v.01'),</p>
+<p>&nbsp;Synset('publish.v.02'),</p>
+<p>&nbsp;Synset('publish.v.03'),</p>
+<p>&nbsp;Synset('published.a.01'),</p>
+<p>&nbsp;Synset('promulgated.s.01')]</p>
+<p>&nbsp;</p>
+<p>得到synset的词性：</p>
+<p>&gt;&gt;&gt; related.pos</p>
+<p>'s'</p>
+<p>&nbsp;</p>
+<p>得到一个sense的所有lemma：</p>
+<p>&gt;&gt;&gt; wordnet.synsets('publish')[0].lemmas</p>
+<p>[Lemma('print.v.01.print'), Lemma('print.v.01.publish')]</p>
+<p>&nbsp;</p>
+<p>得到Lemma出现的次数<span style="color: #ff0000">：试验失败</span></p>
+<p>&gt;&gt;&gt; wordnet.synsets('publish')[0].lemmas[1].count()</p>
+<p>39</p>
+<p>&nbsp;</p>
+<p>在wordnet中，名词和动词被组织成了完整的层次式分类体系，因此可以通过计算两个sense在分类树中的距离，这个距离反应了它们的语义相似度：</p>
+<p>&gt;&gt;&gt; x = wordnet.synsets('recommended')[-1]</p>
+<p>&gt;&gt;&gt; y = wordnet.synsets('suggested')[-1]</p>
+<p>&gt;&gt;&gt; x.shortest_path_distance(y)</p>
+<p>0</p>
+<p>&nbsp;</p>
+<p>形容词和副词的相似度计算方法：</p>
+<p>形容词和副词没有被组织成分类体系，所以不能用path_distance。</p>
+<p>&gt;&gt;&gt; a = wordnet.synsets('beautiful')[0]</p>
+<p>&gt;&gt;&gt; b = wordnet.synsets('good')[0]</p>
+<p>&gt;&gt;&gt; a.shortest_path_distance(b)</p>
+<p>-1</p>
+<p>形容词和副词最有用的关系是similar to。</p>
+<p>&gt;&gt;&gt; a = wordnet.synsets('glorious')[0]</p>
+<p>&gt;&gt;&gt; a.similar_tos()</p>
+<p>[Synset('incandescent.s.02'),</p>
+<p>&nbsp;Synset('divine.s.06'),</p>
+<p>……]</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>http://www.tuicool.com/articles/zqIvAr</p>
+<div id="nei" class="article_body">
+<div>
+<p>WordNet是面向语义的英语词典，类似于传统字典。它是NLTK语料库的一部分,可以被这样调用：</p>
+<p>&nbsp; <img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/BRba63.png!web" alt=""></p>
+<p>更简洁的写法:</p>
+<p><img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/F3M3Qn.png!web" alt=""></p>
+<p><strong>1</strong> <strong>．单词</strong></p>
+<p>查看一个单词的同义词集用synsets(); 它有一个参数pos，可以指定查找的词性。这里得到的同义词集是同义词集的集合，即里面不是单纯的词，是同义词的集合.</p>
+<p><img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/2U3uIj.png!web" alt=""></p>
+<p><span style="color: #ff0000"> <strong>注：</strong> </span></p>
+<ul>
+<li>&nbsp;一个synset(同义词集：指意义相同的词条的集合)被一个三元组描述：（单词.词性.序号）。这里的’dog.n.01’指：dog的第一个名词意思;’chase.v.01’指：chase的第一个动词意思</li>
+<li>&nbsp;pos可为：NOUN、VERB、ADJ、ADV…</li>
+</ul>
+<p><img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/Ybiq6f.png!web" alt=""></p>
+<p><strong>2</strong> <strong>．同义词集</strong></p>
+<p><strong> <img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/RfY3yq.png!web" alt=""> </strong></p>
+<p><span style="color: #ff0000"> <strong>注</strong> ：一些关系的获得只能通过Lemmas，比如反义词： </span></p>
+<p><img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/ueyYVn.png!web" alt=""></p>
+<p><strong>3. Similarity</strong></p>
+<p><strong> <img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/YjMnia.png!web" alt=""> </strong></p>
+<p>synset1.path_similarity(synset2):&nbsp;是基于上位词层次结构中相互连接的概念之间的最短路径在0-1范围的打分（两者之间没有路径就返回-1）。同义词集与自身比较将返回1</p>
+<p><img style="display: block" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/fUv6fi.png!web" alt=""></p>
+<p>参考：</p>
+<p><a href="http://nltk.googlecode.com/svn/trunk/doc/howto/wordnet.html">http://nltk.googlecode.com/svn/trunk/doc/howto/wordnet.html</a></p>
+<p>python 自然语言处理</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1><span style="font-size: 16px">转载请说明出处：http://www.cnblogs.com/KingKou/p/4121373.html</span></h1>
+<p><span style="font-size: 16px">http://www.cnblogs.com/KingKou/p/4121373.html</span></p>
+<p>&nbsp;</p>
+<h1><span style="font-size: 14pt"><span style="line-height: 1.5">1.<span style="line-height: 1.5; font-family: 宋体">简介</span></span></span></h1>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Wordnet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的：</span></p>
+<p>&nbsp;</p>
+<p>　　1.它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。</p>
+<p>&nbsp;</p>
+<p>　　2.支持自动的文本分析以及人工智能应用。</p>
+<p>&nbsp;</p>
+<p>　　在WordNet中，名词，动词，形容词和副词各自被组织成一个同义词的网络，每个同义词集合都代表一个基本的语义概念，并且这些集合之间也由各种关系连</p>
+<p>&nbsp;</p>
+<p>接。（一个多义词将出现在它的每个意思的同义词集合中）。</p>
+<p>&nbsp;</p>
+<p class="p18"><span style="font-size: 14pt"><strong>2.<span style="font-family: 宋体">使用</span></strong></span></p>
+<p>&nbsp;</p>
+<p class="p17"><span style="font-size: 16px"><strong>2.1&nbsp;<span style="font-family: 宋体">直接调用</span></strong></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　直接使用<span style="font-family: &quot;Times New Roman&quot;">wn.exe<span style="font-family: 宋体">程序，命令行格式如下：</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Wn&nbsp;&nbsp;[<span style="font-family: 宋体">单词<span style="font-family: &quot;Times New Roman&quot;">]&nbsp;[options]&nbsp;[search_option]</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　Options<span style="font-family: 宋体">：</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-h:<span style="font-family: 宋体">会在显示结果前面显示帮助信息</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-g:<span style="font-family: 宋体">显示同义词相关的文本注释，一般是释义<span style="font-family: &quot;Times New Roman&quot;">+<span style="font-family: 宋体">例句</span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-a:<span style="font-family: 宋体">在每一种<span style="font-family: &quot;Times New Roman&quot;">sense<span style="font-family: 宋体">前，显示字典撰写者的文件信息</span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-o:<span style="font-family: 宋体">显示同义词的偏移量</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-s:<span style="font-family: 宋体">显示所有同义词的单词编号</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-l:<span style="font-family: 宋体">显示<span style="font-family: &quot;Times New Roman&quot;">wordnet<span style="font-family: 宋体">的版权、版本、许可证信息</span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-n#:<span style="font-family: 宋体">只查找单词的第<span style="font-family: &quot;Times New Roman&quot;">#<span style="font-family: 宋体">个释义的信息</span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-over:<span style="font-family: 宋体">显示单词的所以释义的整体信息</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">&nbsp; search_option:</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-syns&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;):<span style="font-family: 宋体">显示单词的同义词和直接上位词的同义词集。同义词以使用频率排序。括号里的是对应的词性（名词，动词，形容词，副词）</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-simsv：显示动词的同义词和包含单词的直接上位词的同义词集合。同义词按照语义相似度分组</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-ants&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;)：显示单词的反义词集</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-faml&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;)：显示单词是否常见，和一词多义信息</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-hype&nbsp;(n&nbsp;|&nbsp;v&nbsp;)：递归地显示单词上位词树。（单词&nbsp;IS&nbsp;A&nbsp;KIND&nbsp;OF&nbsp;_____&nbsp;relation）</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-hypo&nbsp;(n&nbsp;|&nbsp;v&nbsp;)：显示直接下位词（_____&nbsp;IS&nbsp;A&nbsp;KIND&nbsp;OF&nbsp;单词&nbsp;relation）</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-tree&nbsp;(n&nbsp;|&nbsp;v&nbsp;)：递归显示单词的下位词树</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-coor&nbsp;(n&nbsp;|&nbsp;v&nbsp;)：显示每个同义词的直接上位词及上位词的直接上位词</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-deri&nbsp;(n&nbsp;|&nbsp;v&nbsp;)：显示派生名词和动词之间的联系形式。如<span style="font-family: &quot;Times New Roman&quot;">goodness</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-domn&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;)：显示单词所属的类，如<span style="font-family: &quot;Times New Roman&quot;">good<span style="font-family: 宋体">的副词</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-domt&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;)：显示所有被分在单词所在领域的所有成员</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-subsn：显示实体的部件关系。HAS&nbsp;SUBSTANCE关系（<span style="font-family: &quot;Times New Roman&quot;">tree<span style="font-family: 宋体">）</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-partn:<span style="font-family: 宋体">显示部分关系，比如头的部分是耳朵，脸，鼻子，之类的。HAS&nbsp;PART关系</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-membn：显示成员关系，比如<span style="font-family: &quot;Times New Roman&quot;">people<span style="font-family: 宋体">有成员<span style="font-family: &quot;Times New Roman&quot;">citizen<span style="font-family: 宋体">。HAS&nbsp;MEMBER关系</span></span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-meron：显示上面三个全部信息</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-hmern：显示成员树。这是一个递归树，会显示单词的所有成员和他的上位词（<span style="font-family: &quot;Times New Roman&quot;">people<span style="font-family: 宋体">）</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-sprtn：显示包含单词的实体（PART&nbsp;OF关系）</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-smemn：显示包含这个单词为成员的实体，MEMBER&nbsp;OF关系</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-ssubn：显示包含这个单词为部件关系的实体，SUBSTANCE&nbsp;OF关系</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-holon：显示所有上述三个关系</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-hholn：递归显示<span style="font-family: &quot;Times New Roman&quot;">part&nbsp;of<span style="font-family: 宋体">关系</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-entav：显示蕴含关系，通常是动词（<span style="font-family: &quot;Times New Roman&quot;">push<span style="font-family: 宋体">）</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-framv：显示示例</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-causv：导致关系</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-pert&nbsp;(a&nbsp;|&nbsp;r&nbsp;)：pertainyms&nbsp;</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-attr&nbsp;(n&nbsp;|&nbsp;a&nbsp;)：名词形容词的相互显示</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　-grep&nbsp;(n&nbsp;|&nbsp;v&nbsp;|&nbsp;a&nbsp;|&nbsp;r&nbsp;)：显示包含单词的词</span></p>
+<p>&nbsp;</p>
+<p class="p17"><strong><span style="font-size: 16px">2.2&nbsp;nltk<span style="font-family: 宋体">接口调用</span></span></strong></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Nltk<span style="font-family: 宋体">中也带有<span style="font-family: &quot;Times New Roman&quot;">wordnet<span style="font-family: 宋体">，但是调用方式有所不同，调用方式如下：</span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　from&nbsp;nltk.corpus&nbsp;import&nbsp;wordnet&nbsp;as&nbsp;wn</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　首先，是我们常用同义词的调用：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　wn.synsets('motorcar')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：[Synset('car.n.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　因为'motorcar'只有一个意思，所以结果只有一个，那就是’car’作为名词的第一种释义。</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　我们也可以这样调用，获取单词指定词性、释义的同义词集：<br><span style="font-size: 16px">	　　&gt;&gt;&gt;&nbsp;wn.synset('car.n.01').lemma_names</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['car',&nbsp;'auto',&nbsp;'automobile',&nbsp;'machine',&nbsp;'motorcar']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　如果我们不知道单词第<span style="font-family: &quot;Times New Roman&quot;">I<span style="font-family: 宋体">个释义的意思，我们可以调用<span style="font-family: &quot;Times New Roman&quot;">definition<span style="font-family: 宋体">查看，以便更精确地使用。</span></span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('car.n.01').definition</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'a&nbsp;motor&nbsp;vehicle&nbsp;with&nbsp;four&nbsp;wheels;&nbsp;usually&nbsp;propelled&nbsp;by&nbsp;an&nbsp;internal&nbsp;combustion&nbsp;engine<span style="font-family: 宋体">（内燃机）<span style="font-family: &quot;Times New Roman&quot;">'</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　我们还可以调用<span style="font-family: &quot;Times New Roman&quot;">examples<span style="font-family: 宋体">查看具体例句：</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('car.n.01').examples</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['he&nbsp;needs&nbsp;a&nbsp;car&nbsp;to&nbsp;get&nbsp;to&nbsp;work']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　在语言学中，有一个重要的任务，就是消歧，我们使用<span style="font-family: &quot;Times New Roman&quot;">lemma<span style="font-family: 宋体">（词条），可以获得一对一的同义词配对。</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('car.n.01').lemmas&nbsp;<span style="font-family: 宋体">①</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Lemma('car.n.01.car'),&nbsp;Lemma('car.n.01.auto'),&nbsp;Lemma('car.n.01.automobile'),</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Lemma('car.n.01.machine'),&nbsp;Lemma('car.n.01.motorcar')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　①&nbsp;这是所有的词条，结果和上面直接查看同义词的是一样的</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.lemma('car.n.01.automobile')&nbsp;&nbsp;②</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Lemma('car.n.01.automobile')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　②&nbsp;我们可以判断特定两个词是否满足要求</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.lemma('car.n.01.automobile').synset&nbsp;<span style="font-family: 宋体">③</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Synset('car.n.01')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　③&nbsp;&nbsp;获取词条对应的同义词</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.lemma('car.n.01.automobile').name&nbsp;<span style="font-family: 宋体">④</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　结果：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'automobile'</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　④&nbsp;获取词条的名字</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　通过上面，我们可以获得一种获得同义词的方法：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synsets('car')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('car.n.01'),&nbsp;Synset('car.n.02'),&nbsp;Synset('car.n.03'),&nbsp;Synset('car.n.04'),</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Synset('cable_car.n.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;for&nbsp;synset&nbsp;in&nbsp;wn.synsets('car'):</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　...&nbsp;print&nbsp;synset.lemma_names</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　...</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['car',&nbsp;'auto',&nbsp;'automobile',&nbsp;'machine',&nbsp;'motorcar']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['car',&nbsp;'railcar',&nbsp;'railway_car',&nbsp;'railroad_car']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['car',&nbsp;'gondola']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['car',&nbsp;'elevator_car']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['cable_car',&nbsp;'car']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　把得到的结果合并区<span style="font-family: &quot;Times New Roman&quot;">set()<span style="font-family: 宋体">即可获得单词的同义词。</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　另外一种获得同义词，或者说是同类词的方法，就是上位词和下位词。比如’car’：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;motorcar&nbsp;=&nbsp;wn.synset('car.n.01')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;types_of_motorcar&nbsp;=&nbsp;motorcar.hyponyms()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;types_of_motorcar[26]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Synset('ambulance.n.01')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;sorted([lemma.name&nbsp;for&nbsp;synset&nbsp;in&nbsp;types_of_motorcar&nbsp;for&nbsp;lemma&nbsp;in&nbsp;synset.lemmas])</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　['Model_T',&nbsp;'S.U.V.',&nbsp;'SUV',&nbsp;'Stanley_Steamer',&nbsp;'ambulance',&nbsp;'beach_waggon',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'beach_wagon',&nbsp;'bus',&nbsp;'cab',&nbsp;'compact',&nbsp;'compact_car',&nbsp;'convertible',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'coupe',&nbsp;'cruiser',&nbsp;'electric',&nbsp;'electric_automobile',&nbsp;'electric_car',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'estate_car',&nbsp;'gas_guzzler',&nbsp;'hack',&nbsp;'hardtop',&nbsp;'hatchback',&nbsp;'heap',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'horseless_carriage',&nbsp;'hot-rod',&nbsp;'hot_rod',&nbsp;'jalopy',&nbsp;'jeep',&nbsp;'landrover',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'limo',&nbsp;'limousine',&nbsp;'loaner',&nbsp;'minicar',&nbsp;'minivan',&nbsp;'pace_car',&nbsp;'patrol_car',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'phaeton',&nbsp;'police_car',&nbsp;'police_cruiser',&nbsp;'prowl_car',&nbsp;'race_car',&nbsp;'racer',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'racing_car',&nbsp;'roadster',&nbsp;'runabout',&nbsp;'saloon',&nbsp;'secondhand_car',&nbsp;'sedan',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'sport_car',&nbsp;'sport_utility',&nbsp;'sport_utility_vehicle',&nbsp;'sports_car',&nbsp;'squad_car',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'station_waggon',&nbsp;'station_wagon',&nbsp;'stock_car',&nbsp;'subcompact',&nbsp;'subcompact_car',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'taxi',&nbsp;'taxicab',&nbsp;'tourer',&nbsp;'touring_car',&nbsp;'two-seater',&nbsp;'used-car',&nbsp;'waggon',</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　'wagon']</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　在调用<span style="font-family: &quot;Times New Roman&quot;">wordnet<span style="font-family: 宋体">的<span style="font-family: &quot;Times New Roman&quot;">exe<span style="font-family: 宋体">程序时，我们知道有从属关系，成员关系，蕴含关系之类的，在<span style="font-family: &quot;Times New Roman&quot;">nltk<span style="font-family: 宋体">，它们是这样的：</span></span></span></span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('tree.n.01').part_meronyms()&nbsp;&nbsp;&nbsp;&nbsp;【部分】</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('burl.n.02'),&nbsp;Synset('crown.n.07'),&nbsp;Synset('stump.n.01'),</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Synset('trunk.n.01'),&nbsp;Synset('limb.n.02')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('tree.n.01').substance_meronyms()&nbsp;&nbsp;&nbsp;&nbsp;【实质】</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('heartwood.n.01'),&nbsp;Synset('sapwood.n.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('tree.n.01').member_holonyms()&nbsp;&nbsp;&nbsp;【成员】</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('forest.n.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('mint.n.04').part_holonyms()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('mint.n.02')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('mint.n.04').substance_holonyms()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('mint.n.05')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　下面是蕴含关系：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('walk.v.01').entailments()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('step.v.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('eat.v.01').entailments()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('swallow.v.01'),&nbsp;Synset('chew.v.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;&nbsp;wn.synset('tease.v.03').entailments()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('arouse.v.07'),&nbsp;Synset('disappoint.v.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　相对来说，个人感觉反义词做的就比较简陋：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;wn.lemma('supply.n.02.supply').antonyms()</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Lemma('demand.n.02.demand')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　Nltk<span style="font-family: 宋体">有个功能，能根据内部的关系树，计算两个词之间的相似度：</span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;lim=wn.synset('limousine.n.1')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;amb=wn.synset('ambulance.n.1')</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;lim.lowest_common_hypernyms(amb)&nbsp;</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　[Synset('car.n.01')]</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　我们可以看出，“'limousine（豪华轿车）”和“'ambulance（救护车）”的共同点（也就是公共上位词）是“<span style="font-family: &quot;Times New Roman&quot;">car<span style="font-family: 宋体">”。此外，我们还可以得到他们的相似度：</span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;lim.path_similarity(amb)</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　0.3333333333333333</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　还可以看他们的最近举例，举例越近，相似度越高：</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&gt;&gt;&gt;lim.shortest_path_distance(amb)</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　2</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　&nbsp;</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">　　上面列举了<span style="font-family: &quot;Times New Roman&quot;">NLTK<span style="font-family: 宋体">的一些常用的命令，基本上<span style="font-family: &quot;Times New Roman&quot;">wordnet<span style="font-family: 宋体">中的命令，在<span style="font-family: &quot;Times New Roman&quot;">NLTK<span style="font-family: 宋体">都包括了，还有一些，比如<span style="font-family: &quot;Times New Roman&quot;">offset<span style="font-family: 宋体">等，有需要的时候可以参考<a href="http://www.cnblogs.com/KingKou/p/4121373.html#module-nltk.corpus.reader.wordnet">链接<span style="font-family: &quot;Times New Roman&quot;">1</span></a>。</span></span></span></span></span></span></span></span></span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">参考链接：</span></p>
+<p>&nbsp;</p>
+<ol>
+<li><span style="font-size: 16px">nltk<span style="font-family: 宋体">官方文档：</span></span></li>
+
+
+
+</ol>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href="http://www.nltk.org/api/nltk.corpus.reader.html%23module-nltk.corpus.reader.wordnet">http://www.nltk.org/api/nltk.corpus.reader.html#module-nltk.corpus.reader.wordnet</a></span></p>
+<p>&nbsp;</p>
+<ol>
+<li><span style="font-size: 16px">wordnet</span></li>
+
+
+
+</ol>
+<p>&nbsp;</p>
+<p class="p0"><span style="font-size: 16px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href="http://wordnet.princeton.edu/">http://wordnet.princeton.edu/</a></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="img">
+<div class="tit">
+<h3 class="f-thide"><a href="https://study.163.com/course/introduction.htm?courseId=1005214003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share" target="_blank">python风控评分卡建模和风控常识</a></h3>
+</div>
+</div>
+<div class="half_rhythm">
+<p><a href="https://study.163.com/course/introduction.htm?courseId=1005214003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share" target="_blank">https://study.163.com/course/introduction.htm?courseId=1005214003&amp;utm_campaign=commission&amp;utm_source=cp-400000000398149&amp;utm_medium=share</a></p>
+<p><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/895802-20180417215847845-1980916170.png" alt=""></p>
+</div>
+<p>&nbsp;</p>
+
+
+</div>
+
+
+</div>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/webRobot/category/905998.html" target="_blank">自然语言</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6094311,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;f0b28315-43d8-e511-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/webRobot/" target="_blank"><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/20160221103737.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/webRobot/">python_backup</a><br>
+            <a href="http://home.cnblogs.com/u/webRobot/followees">关注 - 4</a><br>
+            <a href="http://home.cnblogs.com/u/webRobot/followers">粉丝 - 27</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;f0b28315-43d8-e511-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6094311,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(6094311,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/webRobot/p/6088625.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/webRobot/p/6088625.html" title="发布于2016-11-22 11:45">自然语言18.2_NLTK命名实体识别</a><br><a href="http://www.cnblogs.com/webRobot/p/6100305.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/webRobot/p/6100305.html" title="发布于2016-11-25 08:52">QQ空间爬虫最新分享，一天 400 万条数据（附代码地址）</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2016-11-23 16:59</span> <a href="http://www.cnblogs.com/webRobot/">python_backup</a> 阅读(<span id="post_view_count">3146</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6094311" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/webRobot/p/6094311.html#" onclick="AddToWz(6094311);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=267709,cb_entryId=6094311,cb_blogApp=currentBlogApp,cb_blogUserGuid='f0b28315-43d8-e511-9fc1-ac853d9f53cc',cb_entryCreatedDate='2016/11/23 16:59:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/webRobot/p/6094311.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/webRobot/p/6094311.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="https://cloud.tencent.com/act/campus/group/index?fromSource=gwzcw.1087490.1087490.1087490" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-T2-腾讯云&#39;)">【福利】校园拼团福利，腾讯云1核2G云服务器10元/月！</a><br><a href="http://challenge.xfyun.cn/?ch=bk" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-xfyun&#39;)">【大赛】2018首届“顶天立地”AI开发者大赛</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://dnspod.cloud.tencent.com/act/yearendsales?from=IT&amp;fromSource=gwzcw.1087492.1087492.1087492" target="_blank"><img width="300" height="250" src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/24442-20180702115226334-1185241560.jpg" alt="qcloud0702" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1&#39;);"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/600942/" target="_blank">杨柘从魅族离职了，一年多的闹剧终于接近收场</a><br> ·  <a href="https://news.cnblogs.com/n/600939/" target="_blank">非典型游戏研究：什么游戏好玩又不上瘾？</a><br> ·  <a href="https://news.cnblogs.com/n/600938/" target="_blank">风暴中心FGO团队正式致歉，玩家：态度诚恳接受道歉</a><br> ·  <a href="https://news.cnblogs.com/n/600937/" target="_blank">作弊玩家无路可逃？微软将利用人工智能来反作弊</a><br> ·  <a href="https://news.cnblogs.com/n/600936/" target="_blank">微信公众号被曝封禁西瓜视频链接 腾讯下饭视频则不受影响</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/34770/" target="_blank"><img src="./自然语言20.1 WordNet介绍和使用 _ - python_backup - 博客园_files/TB1gBPhgZLJ8KJjy0FnXXcFDpXa-468-60.jpg" alt="" style="width: 468px; height: 60px;"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/599854/" target="_blank">从Excel到微服务</a><br> ·  <a href="http://kb.cnblogs.com/page/522513/" target="_blank">如何提升你的能力？给年轻程序员的几条建议</a><br> ·  <a href="http://kb.cnblogs.com/page/553361/" target="_blank">程序员的那些反模式</a><br> ·  <a href="http://kb.cnblogs.com/page/598335/" target="_blank">程序员的宇宙时间线</a><br> ·  <a href="http://kb.cnblogs.com/page/597877/" target="_blank">突破程序员思维</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/webRobot/">python_backup</a><br>园龄：<a href="https://home.cnblogs.com/u/webRobot/" title="入园时间：2016-02-21">2年4个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/webRobot/followers/">27</a><br>关注：<a href="https://home.cnblogs.com/u/webRobot/followees/">4</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;f0b28315-43d8-e511-9fc1-ac853d9f53cc&#39;)">+加关注</a></div><script>getFollowStatus('f0b28315-43d8-e511-9fc1-ac853d9f53cc')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/06/01&#39;);return false;">&lt;</a></td><td align="center">2018年7月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/08/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/webRobot/archive/2018/07/01.html"><u>1</u></a></td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td class="CalTodayDay" align="center">5</td><td align="center">6</td><td class="CalWeekendDay" align="center">7</td></tr><tr><td class="CalWeekendDay" align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td class="CalWeekendDay" align="center">14</td></tr><tr><td class="CalWeekendDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td class="CalWeekendDay" align="center">21</td></tr><tr><td class="CalWeekendDay" align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td class="CalWeekendDay" align="center">28</td></tr><tr><td class="CalWeekendDay" align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/webRobot/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/webRobot/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/webRobot/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/webRobot/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/webRobot/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/webRobot/tag/python/">python</a>(32)</li><li><a href="http://www.cnblogs.com/webRobot/tag/statistics/">statistics</a>(11)</li><li><a href="http://www.cnblogs.com/webRobot/tag/sklearn/">sklearn</a>(7)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>(5)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E7%BB%9F%E8%AE%A1/">统计</a>(5)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E5%9B%9E%E5%BD%92/">回归</a>(4)</li><li><a href="http://www.cnblogs.com/webRobot/tag/xgboost/">xgboost</a>(4)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E5%A4%9A%E5%85%83%E5%9B%9E%E5%BD%92/">多元回归</a>(4)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>(4)</li><li><a href="http://www.cnblogs.com/webRobot/tag/%E7%99%8C%E7%97%87/">癌症</a>(2)</li><li><a href="http://www.cnblogs.com/webRobot/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/webRobot/category/831129.html">excel操作(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/webRobot/category/816436.html">Json and API(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/webRobot/category/1034765.html">numpy(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/webRobot/category/845573.html">porn</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/webRobot/category/821046.html">pyautogui(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/webRobot/category/810585.html">pyinstaller(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="https://www.cnblogs.com/webRobot/category/831348.html">pypdf2=(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="https://www.cnblogs.com/webRobot/category/909021.html">PYQT(11)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="https://www.cnblogs.com/webRobot/category/892061.html">seo(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="https://www.cnblogs.com/webRobot/category/1140438.html">sklearn机器学习(30)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="https://www.cnblogs.com/webRobot/category/854837.html">sop</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="https://www.cnblogs.com/webRobot/category/1121888.html">Word处理</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="https://www.cnblogs.com/webRobot/category/927562.html">程序项目汇总(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="https://www.cnblogs.com/webRobot/category/801132.html">多线程(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="https://www.cnblogs.com/webRobot/category/1145851.html">风控数据(22)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="https://www.cnblogs.com/webRobot/category/1167109.html">工作数据备份(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="https://www.cnblogs.com/webRobot/category/805485.html">密码学/网络安全(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="https://www.cnblogs.com/webRobot/category/1201778.html">模型验证SOP(11)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="https://www.cnblogs.com/webRobot/category/789985.html">爬虫(78)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="https://www.cnblogs.com/webRobot/category/808963.html">期刊文献数据库(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="https://www.cnblogs.com/webRobot/category/1175083.html">区域连/比特币(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_21" href="https://www.cnblogs.com/webRobot/category/1135714.html">深度学习(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_22" href="https://www.cnblogs.com/webRobot/category/1090668.html">视频制作</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_23" href="https://www.cnblogs.com/webRobot/category/800646.html">数据分析/算法(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_24" href="https://www.cnblogs.com/webRobot/category/831686.html">数据可视化(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_25" href="https://www.cnblogs.com/webRobot/category/1038414.html">数据库：Oracle/navicat/mysql(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_26" href="https://www.cnblogs.com/webRobot/category/789987.html">数据批量处理(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_27" href="https://www.cnblogs.com/webRobot/category/989320.html">统计(62)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_28" href="https://www.cnblogs.com/webRobot/category/1027639.html">统计最终版脚本(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_29" href="https://www.cnblogs.com/webRobot/category/1055498.html">营销(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_30" href="https://www.cnblogs.com/webRobot/category/839594.html">邮件/图片处理(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_31" href="https://www.cnblogs.com/webRobot/category/789984.html">正则表达式re(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_32" href="https://www.cnblogs.com/webRobot/category/905998.html">自然语言(59)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_33" href="https://www.cnblogs.com/webRobot/category/1037955.html">作品展示(41)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="https://www.cnblogs.com/webRobot/archive/2018/07.html">2018年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="https://www.cnblogs.com/webRobot/archive/2018/06.html">2018年6月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="https://www.cnblogs.com/webRobot/archive/2018/05.html">2018年5月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="https://www.cnblogs.com/webRobot/archive/2018/04.html">2018年4月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="https://www.cnblogs.com/webRobot/archive/2018/03.html">2018年3月 (20)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="https://www.cnblogs.com/webRobot/archive/2018/02.html">2018年2月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="https://www.cnblogs.com/webRobot/archive/2018/01.html">2018年1月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="https://www.cnblogs.com/webRobot/archive/2017/12.html">2017年12月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="https://www.cnblogs.com/webRobot/archive/2017/11.html">2017年11月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="https://www.cnblogs.com/webRobot/archive/2017/10.html">2017年10月 (24)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="https://www.cnblogs.com/webRobot/archive/2017/09.html">2017年9月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="https://www.cnblogs.com/webRobot/archive/2017/08.html">2017年8月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="https://www.cnblogs.com/webRobot/archive/2017/07.html">2017年7月 (26)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="https://www.cnblogs.com/webRobot/archive/2017/06.html">2017年6月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="https://www.cnblogs.com/webRobot/archive/2017/05.html">2017年5月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="https://www.cnblogs.com/webRobot/archive/2017/04.html">2017年4月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="https://www.cnblogs.com/webRobot/archive/2017/02.html">2017年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="https://www.cnblogs.com/webRobot/archive/2017/01.html">2017年1月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="https://www.cnblogs.com/webRobot/archive/2016/12.html">2016年12月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="https://www.cnblogs.com/webRobot/archive/2016/11.html">2016年11月 (59)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="https://www.cnblogs.com/webRobot/archive/2016/10.html">2016年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="https://www.cnblogs.com/webRobot/archive/2016/09.html">2016年9月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="https://www.cnblogs.com/webRobot/archive/2016/08.html">2016年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="https://www.cnblogs.com/webRobot/archive/2016/06.html">2016年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="https://www.cnblogs.com/webRobot/archive/2016/05.html">2016年5月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="https://www.cnblogs.com/webRobot/archive/2016/04.html">2016年4月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="https://www.cnblogs.com/webRobot/archive/2016/03.html">2016年3月 (29)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="https://www.cnblogs.com/webRobot/archive/2016/02.html">2016年2月 (9)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/webRobot/p/8094668.html#3967788">1. Re:Scrapy爬虫框架教程（四）-- 抓取AJAX异步加载网页</a></li>
+        <li class="recent_comment_body">博主的文章写的很棒，解决了我的疑惑，给你点赞！</li>
+        <li class="recent_comment_author">--y_xiansheng</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/webRobot/p/6877283.html#3911880">2. Re:方差分析</a></li>
+        <li class="recent_comment_body">@gaoxiangTOP=a1z10.1-c-s.w4004-13911786811.22.6431353b4F5iw1&amp;id=564829040685...</li>
+        <li class="recent_comment_author">--python_backup</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/webRobot/p/6877283.html#3908411">3. Re:方差分析</a></li>
+        <li class="recent_comment_body">请问  方差分析的图解是哪本书上的、求书名  谢谢</li>
+        <li class="recent_comment_author">--gaoxiangTOP</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/webRobot/p/6047640.html#3843317">4. Re:N-Gram</a></li>
+        <li class="recent_comment_body">.........</li>
+        <li class="recent_comment_author">--thouger</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/webRobot/p/6216994.html#3777233">5. Re:opencv_判断两张图片是否相同</a></li>
+        <li class="recent_comment_body">@云敛晴空用Python3...</li>
+        <li class="recent_comment_author">--python_backup</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/webRobot/p/6351301.html">1. PyQt 5.4参考指南 ---- PyQt5和PyQt4之间的差异(6494)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6065831.html">2. nltk.download()出错解决(3825)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6079846.html">3. 自然语言11_情感分析(3574)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6760839.html">4. Tests for normality正态分布检验(3378)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6943562.html">5. 卡方检验(3204)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/webRobot/p/6216994.html">1. opencv_判断两张图片是否相同(2)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6877283.html">2. 方差分析(2)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6047640.html">3. N-Gram(1)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/6065831.html">4. nltk.download()出错解决(1)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/8094668.html">5. Scrapy爬虫框架教程（四）-- 抓取AJAX异步加载网页(1)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="https://www.cnblogs.com/webRobot/p/6086551.html">1. 自然语言15.1_Part of Speech Tagging 词性标注(1)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/8094668.html">2. Scrapy爬虫框架教程（四）-- 抓取AJAX异步加载网页(1)</a></li><li><a href="https://www.cnblogs.com/webRobot/p/7168404.html">3. bootstrap(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 python_backup
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>
